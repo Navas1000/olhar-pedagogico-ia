@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="System Context" id="0">
+    <mxGraphModel dx="1426" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="prof" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Professoras" vertex="1">
+          <mxGeometry height="60" width="150" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="coord" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Coordenação Pedagógica" vertex="1">
+          <mxGeometry height="60" width="200" x="350" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="system" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;" value="Sistema Olhar Pedagógico com IA" vertex="1">
+          <mxGeometry height="90" width="240" x="320" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="ai" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Serviço de IA&#xa;(Transcrição e Resumo)" vertex="1">
+          <mxGeometry height="80" width="220" x="870" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Banco de Dados&#xa;Observações dos Alunos" vertex="1">
+          <mxGeometry height="80" width="200" x="350" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="prof" style="endArrow=block;html=1;exitX=1;exitY=0.617;exitDx=0;exitDy=0;exitPerimeter=0;" target="system" value="Envio de Áudio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="system" style="endArrow=block;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0.004;exitY=0.167;exitDx=0;exitDy=0;exitPerimeter=0;" target="prof" value="Recomendação Pedagógica">
+          <mxGeometry relative="1" x="-0.0529" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="system" style="endArrow=block;html=1;" target="coord" value="Consulta de Informações">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="system" style="endArrow=block;html=1;" target="ai" value="Envio de Áudio e Prompts de Análise">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" style="endArrow=block;html=1;" value="Retorno das Transcrições e Analises">
+          <mxGeometry relative="1" x="0.0323" y="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="870" y="277.1285185185185" as="sourcePoint" />
+            <mxPoint x="560" y="279.9988888888889" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="system" style="endArrow=block;html=1;exitX=0.317;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.19;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="db" value="Armazenar Observações">
+          <mxGeometry relative="1" x="-0.0346" y="-42" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="db" style="endArrow=block;html=1;" target="system" value="Recuperar Dados">
+          <mxGeometry relative="1" x="-0.3044" y="-34" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
