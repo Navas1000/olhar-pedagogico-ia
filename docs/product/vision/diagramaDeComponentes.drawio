@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="Component Diagram" id="0">
+    <mxGraphModel dx="1426" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="domain" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;" value="Camada Domain&#xa;- Entidades pedagógicas&#xa;- Regras de negócio&#xa;- Validações de domínio" vertex="1">
+          <mxGeometry height="120" width="260" x="620" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="application" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="Camada Application&#xa;- Casos de uso&#xa;- Portas de aplicação&#xa;- Orquestração interna" vertex="1">
+          <mxGeometry height="120" width="260" x="620" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="rest" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="API REST&#xa;Adapter Inbound" vertex="1">
+          <mxGeometry height="70" width="180" x="220" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="persistence" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Persistência&#xa;Adapter Outbound" vertex="1">
+          <mxGeometry height="70" width="180" x="1020" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="messaging" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Mensageria&#xa;Adapter Outbound" vertex="1">
+          <mxGeometry height="70" width="180" x="1020" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="storage" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Storage&#xa;Adapter Outbound" vertex="1">
+          <mxGeometry height="70" width="180" x="1020" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="stt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Cliente Speech-to-Text" vertex="1">
+          <mxGeometry height="60" width="180" x="1250" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Cliente Modelo de Linguagem" vertex="1">
+          <mxGeometry height="60" width="180" x="1250" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="tts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Cliente Text-to-Speech&#xa;(evolução futura)" vertex="1">
+          <mxGeometry height="60" width="180" x="1250" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Biblioteca de Autenticação" vertex="1">
+          <mxGeometry height="60" width="180" x="20" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="logs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Biblioteca de Logs" vertex="1">
+          <mxGeometry height="60" width="180" x="220" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="aiLib" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Biblioteca de Integração com IA" vertex="1">
+          <mxGeometry height="60" width="180" x="220" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="rest" target="application">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="application" target="domain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="application" target="persistence">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="application" target="messaging">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="application" target="storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="messaging" target="llm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="storage" target="stt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="storage" target="tts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="auth" target="rest">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="logs" target="application">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="aiLib" target="application">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

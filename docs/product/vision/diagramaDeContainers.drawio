@@ -1,0 +1,70 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Container Diagram">
+    <mxGraphModel dx="1462" dy="827" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="frontend" value="Frontend Angular SPA&#xa;Interface para professoras e coordenação" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="bff" value="Backend BFF Service&#xa;Autenticação, JWT, agregação e APIs para frontend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="100" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="app" value="Backend Aplicação Service&#xa;Orquestração e regras de aplicação" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="100" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="inst" value="Backend Institucional Service&#xa;Empresa e Unidade Escolar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="260" y="270" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pess" value="Backend Pessoas Service&#xa;Pessoa, Aluno, Funcionário, Papel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="520" y="270" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="acad" value="Backend Acadêmico Service&#xa;Turma, Aula, Professor Turma" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="780" y="270" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ped" value="Backend Pedagógico Service&#xa;Diário, Áudio, Transcrição, Resumo IA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="270" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rabbit" value="RabbitMQ&#xa;Fila de processamento assíncrono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="420" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="worker" value="Backend AI Worker&#xa;Whisper + Llama2 13b" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="560" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="mysql" value="MySQL 8.4.8&#xa;Dados estruturados do sistema" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="560" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="minio" value="MinIO&#xa;Armazenamento de áudios" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="560" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" edge="1" parent="1" source="frontend" target="bff"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="bff" target="app"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="app" target="inst"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="app" target="pess"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="app" target="acad"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="app" target="ped"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ped" target="rabbit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="rabbit" target="worker"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="inst" target="mysql"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="pess" target="mysql"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="acad" target="mysql"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="ped" target="mysql"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="ped" target="minio"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="worker" target="minio"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="worker" target="mysql"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

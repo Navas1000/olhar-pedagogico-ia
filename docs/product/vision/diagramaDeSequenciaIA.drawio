@@ -1,0 +1,114 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="Sequence - AI Analysis Pipeline" id="0">
+    <mxGraphModel dx="1426" dy="785" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ped" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Backend Pedagógico" vertex="1">
+          <mxGeometry height="310" width="140" x="80" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mq" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="RabbitMQ" vertex="1">
+          <mxGeometry height="310" width="120" x="300" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="AI Worker" vertex="1">
+          <mxGeometry height="310" width="120" x="500" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="MySQL" vertex="1">
+          <mxGeometry height="310" width="120" x="700" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="LLM / Llama2 13b" vertex="1">
+          <mxGeometry height="250" width="150" x="930" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="ped" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="mq" value="1. publicar evento de análise">
+          <mxGeometry relative="1" x="-0.0429" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="160" />
+              <mxPoint x="250" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a2" edge="1" parent="1" source="mq" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="worker" value="2. consumir mensagem">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="160" />
+              <mxPoint x="450" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a3" edge="1" parent="1" source="worker" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="db" value="3. recuperar contexto/transcrição">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630" y="160" />
+              <mxPoint x="630" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a4" edge="1" parent="1" source="db" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="worker" value="4. retornar dados do registro">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="190" />
+              <mxPoint x="650" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a5" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=none;" value="5. montar prompt pedagógico">
+          <mxGeometry relative="1" x="0.0018" y="-20" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="640" y="210" />
+              <mxPoint x="640" y="250" />
+              <mxPoint x="560" y="250" />
+            </Array>
+            <mxPoint x="559.5" y="210" as="sourcePoint" />
+            <mxPoint x="560" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a6" edge="1" parent="1" source="worker" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="llm" value="6. enviar prompt para análise">
+          <mxGeometry relative="1" x="-0.009" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="770" y="260" />
+              <mxPoint x="770" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a7" edge="1" parent="1" source="llm" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="worker" value="7. retornar resumo pedagógico">
+          <mxGeometry relative="1" x="0.0022" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="790" y="290" />
+              <mxPoint x="790" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a8" edge="1" parent="1" source="worker" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="db" value="8. persistir resultado">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="660" y="320" />
+              <mxPoint x="660" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a9" edge="1" parent="1" source="db" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="worker" value="9. confirmar gravação">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="350" />
+              <mxPoint x="650" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a10" edge="1" parent="1" source="worker" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=open;" target="ped" value="10. disponibilizar para consulta futura">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="360" y="350" />
+              <mxPoint x="360" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
