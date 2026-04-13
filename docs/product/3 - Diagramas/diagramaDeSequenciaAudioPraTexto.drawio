@@ -1,0 +1,82 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.6">
+  <diagram name="Sequence - Processamento de Áudio IA" id="0">
+    <mxGraphModel dx="1678" dy="924" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="professora" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;" value="Professora" vertex="1">
+          <mxGeometry height="760" width="120" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="frontend" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;" value="Frontend (Angular)" vertex="1">
+          <mxGeometry height="760" width="160" x="200" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="backend" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;" value="Backend Pedagógico" vertex="1">
+          <mxGeometry height="760" width="180" x="420" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;" value="AI Worker" vertex="1">
+          <mxGeometry height="760" width="140" x="660" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="whisper" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;" value="Whisper&#xa;(Speech-to-Text)" vertex="1">
+          <mxGeometry height="760" width="180" x="860" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" source="professora" style="endArrow=block;" target="frontend" value="1. Grava e envia áudio">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" source="frontend" style="endArrow=block;" target="backend" value="2. POST /audio">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" source="backend" style="endArrow=block;" target="worker" value="3. Salva áudio + envia evento">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" source="worker" style="endArrow=block;" target="whisper" value="4. Processar áudio">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="840" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" source="whisper" style="endArrow=open;" target="worker" value="5. Retorna transcrição">
+          <mxGeometry relative="1" x="0.0045" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="830" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" source="worker" style="endArrow=open;" target="backend" value="6. Salva transcrição">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" source="backend" style="endArrow=open;" target="frontend" value="7. Retorna status/resultado">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="390" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" source="frontend" style="endArrow=open;" target="professora" value="8. Exibe transcrição">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

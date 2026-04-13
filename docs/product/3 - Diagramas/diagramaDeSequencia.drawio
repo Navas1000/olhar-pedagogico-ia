@@ -1,0 +1,120 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.4">
+  <diagram name="Sequence - Cadastro de Aluno" id="0">
+    <mxGraphModel dx="1783" dy="981" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rest" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Adaptador REST" vertex="1">
+          <mxGeometry height="760" width="140" x="60" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="portaEntrada" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Porta de Entrada&#xa;cadastraAluno" vertex="1">
+          <mxGeometry height="760" width="170" x="260" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dominio" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Aplicação / UseCase" vertex="1">
+          <mxGeometry height="760" width="140" x="500" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="portaSaida" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Porta de Saída&#xa;Gravação de Dado" vertex="1">
+          <mxGeometry height="760" width="180" x="720" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="adaptadorBD" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="Adaptador de&#xa;Banco de Dados" vertex="1">
+          <mxGeometry height="760" width="170" x="980" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mysql" parent="1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;" value="MySQL" vertex="1">
+          <mxGeometry height="760" width="120" x="1230" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" edge="1" parent="1" source="rest" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="portaEntrada" value="1. POST /alunos&#xa;dados do aluno">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="180" />
+              <mxPoint x="240" y="180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" edge="1" parent="1" source="portaEntrada" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="dominio" value="2. executar cadastraAluno(aluno)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="220" />
+              <mxPoint x="450" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;endArrow=none;" value="3. validar / criar entidade aluno">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650.75" y="240" />
+            </Array>
+            <mxPoint x="560" y="239.99999999999977" as="sourcePoint" />
+            <mxPoint x="560" y="280.00000000000045" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" edge="1" parent="1" source="dominio" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="portaSaida" value="4. solicitar gravação do aluno">
+          <mxGeometry relative="1" x="0.0052" y="20" as="geometry">
+            <mxPoint x="-1" as="offset" />
+            <Array as="points">
+              <mxPoint x="700" y="340" />
+              <mxPoint x="700" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" edge="1" parent="1" source="portaSaida" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="adaptadorBD" value="5. gravar aluno">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="370" />
+              <mxPoint x="950" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m6" edge="1" parent="1" source="adaptadorBD" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" target="mysql" value="6. INSERT INTO aluno (...)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="400" />
+              <mxPoint x="1170" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m7" edge="1" parent="1" source="mysql" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="adaptadorBD" value="7. sucesso na gravação">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="480" />
+              <mxPoint x="1160" y="480" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m8" edge="1" parent="1" source="adaptadorBD" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="portaSaida" value="8. retorno de sucesso">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="510" />
+              <mxPoint x="940" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m9" edge="1" parent="1" source="portaSaida" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="dominio" value="9. aluno cadastrado com sucesso">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="550" />
+              <mxPoint x="700" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m10" edge="1" parent="1" source="dominio" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="portaEntrada" value="10. retorno do caso de uso">
+          <mxGeometry relative="1" x="-0.0011" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="470" y="590" />
+              <mxPoint x="470" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m11" edge="1" parent="1" source="portaEntrada" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;" target="rest" value="11. HTTP 201 Created">
+          <mxGeometry relative="1" x="-0.0012" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="250" y="620" />
+              <mxPoint x="250" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
