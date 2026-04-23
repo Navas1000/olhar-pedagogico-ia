@@ -1,0 +1,28 @@
+services:
+
+  mysql:
+    image: mysql:8.4.8
+    container_name: platform-core-db-mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: platform_core_db
+      MYSQL_USER: mateus
+      MYSQL_PASSWORD: mateus
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "mateus", "-pmateus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
+
