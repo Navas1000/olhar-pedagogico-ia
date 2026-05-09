@@ -1,29 +1,41 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
+import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.CadastrarEmpresaPortIn;
+import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/empresa")
+@AllArgsConstructor
 public class EmpresaAdapter {
 
+    final CadastrarEmpresaPortIn cadastrarEmpresaPortIn;
+    final ConsultarEmpresaPortIn consultarEmpresaPortIn;
+
     @GetMapping("/{id}")
-    public ResponseEntity<EmpresaDTO> consultaEmpresa (@PathVariable Integer id) {
+    public ResponseEntity<?> consultaEmpresa (@PathVariable Integer id) {
 
-        EmpresaDTO empresaConsultada = new EmpresaDTO();
+        try {
+            EmpresaDTO empresaConsultada = consultarEmpresaPortIn.consultar(id);
+            return ResponseEntity.ok(empresaConsultada);
+        } catch (EmpresaNaoEncontradaException excecao) {
 
-        empresaConsultada.setIdEmpresa(1);
-        empresaConsultada.setNome("Ursinho Pimpao");
-        empresaConsultada.setCnpj("12312312312");
-        empresaConsultada.setAtivo(true);
-        empresaConsultada.setDataCriacao(LocalDateTime.now());
-        empresaConsultada.setDataModificacao(LocalDateTime.now());
-        
-        return ResponseEntity.ok(empresaConsultada);
+            Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 
     @PostMapping

@@ -2,6 +2,12 @@ package br.com.olharpedagogicoia.adapters.out.empresa;
 
 import br.com.olharpedagogicoia.adapters.out.empresa.entity.EmpresaEntity;
 import br.com.olharpedagogicoia.adapters.out.empresa.repository.EmpresaRepository;
+import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
+import br.com.olharpedagogicoia.application.exceptions.Constantes;
+import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
+import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -9,19 +15,30 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EmpresaRepositoryAdapter {
+@AllArgsConstructor
+public class EmpresaRepositoryAdapter implements ConsultarEmpresaPortOut {
 
-    EmpresaRepositoryAdapter(EmpresaRepository empresaRepositoryParameter) {
-        empresaRepository = empresaRepositoryParameter;
-    }
-
+    private final int EMPRESA_ATIVA = 1;
     private final EmpresaRepository empresaRepository;
 
-    @Scheduled(fixedRate = 3000)
-    public void testeSomenteVouRemoverNoFuturo(){
-        Long id = 2L;
-        Optional<EmpresaEntity> empresa = empresaRepository.findById(id);
-        System.out.println("Relogio Desparou" + empresa);
+    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException {
+
+        final Optional<EmpresaEntity> empresaOpcional = empresaRepository.findById(id);
+
+        if (empresaOpcional.isPresent()) {
+            EmpresaEntity empresaRetornada = empresaOpcional.get();
+            EmpresaDTO empresaConsultada = new EmpresaDTO();
+            empresaConsultada.setIdEmpresa(empresaRetornada.getIdEmpresa());
+            empresaConsultada.setNome(empresaRetornada.getNome());
+            empresaConsultada.setCnpj(empresaRetornada.getCnpj());
+            empresaConsultada.setAtivo(empresaRetornada.getAtivo() == EMPRESA_ATIVA);
+            empresaConsultada.setDataCriacao(empresaRetornada.getDataCriacao());
+            empresaConsultada.setDataModificacao(empresaRetornada.getDataModificacao());
+
+            return empresaConsultada;
+        }
+
+        throw new EmpresaNaoEncontradaException(Constantes.EMPRESA_NAO_ENCONTRADA);
 
     }
 
