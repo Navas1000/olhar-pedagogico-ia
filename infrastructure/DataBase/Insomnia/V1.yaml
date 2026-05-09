@@ -1,0 +1,1958 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Olhar Pedagógico IA
+meta:
+  id: wrk_43016bf56b5d464cbbbf96a9632baa85
+  created: 1777505100057
+  modified: 1777505100057
+  description: ""
+collection:
+  - name: Backend Academicos (Incompleto)
+    meta:
+      id: fld_4e57d67de83844a3a8747604a345d779
+      created: 1777906782399
+      modified: 1778287653283
+      sortKey: -1778009293412
+      description: ""
+    children:
+      - name: AlunoTurma
+        meta:
+          id: fld_d3815559b3f04cc0aebb04099d2990c7
+          created: 1777907541055
+          modified: 1777907541055
+          sortKey: -1777907541055
+          description: ""
+        children:
+          - url: http://localhost:8080/aluno-turma/5
+            name: Consultar AlunoTurma
+            meta:
+              id: req_5699d4a0e9634276a2ac3deb3696461b
+              created: 1777906709151
+              modified: 1778109590777
+              isPrivate: false
+              description: ""
+              sortKey: -1777907546421
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Cadastrar AlunoTurma
+            meta:
+              id: req_a3378b9faa3d417ba793883cc00502c6
+              created: 1777906961219
+              modified: 1778008747138
+              isPrivate: false
+              description: ""
+              sortKey: -1777907546396
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_aluno": 5,
+                	"status_matricula": "ATIVO",
+                	"data_ingresso": "2026-05-04",
+                	"data_criacao": "2026-05-04T12:10:19.6895321"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma/5
+            name: Remover AlunoTurma
+            meta:
+              id: req_90b232000a144ef3b02d8045784951fd
+              created: 1778008690380
+              modified: 1778008695065
+              isPrivate: false
+              description: ""
+              sortKey: -1777907546371
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Atualiza AlunoTurma
+            meta:
+              id: req_8115bd5df9cf4664b813c5b55f4bb543
+              created: 1778008704739
+              modified: 1778008709590
+              isPrivate: false
+              description: ""
+              sortKey: -1777907546271
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_aluno": 5,
+                	"status_matricula": "ATIVO",
+                	"data_ingresso": "2026-05-04",
+                	"data_criacao": "2026-05-04T12:10:19.6895321"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Aula
+        meta:
+          id: fld_d65545e7e6f14350a3f412b0760b1039
+          created: 1778008735906
+          modified: 1778008831332
+          sortKey: -1777907541155
+          description: ""
+        children:
+          - url: http://localhost:8080/aluno-turma/5
+            name: Consultar Aula
+            meta:
+              id: req_b97a5220ada04b498858080f4f120acf
+              created: 1778008763091
+              modified: 1778109586363
+              isPrivate: false
+              description: ""
+              sortKey: -1778008771102
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Cadastrar Aula
+            meta:
+              id: req_476a5fd87b9c4f41999da47f2f1df2de
+              created: 1778008784481
+              modified: 1778008789760
+              isPrivate: false
+              description: ""
+              sortKey: -1778008771002
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_aluno": 5,
+                	"status_matricula": "ATIVO",
+                	"data_ingresso": "2026-05-04",
+                	"data_criacao": "2026-05-04T12:10:19.6895321"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma/5
+            name: Remover Aula
+            meta:
+              id: req_eb0e2cdc6d7d4221afe45f87bff244f9
+              created: 1778008797730
+              modified: 1778008801058
+              isPrivate: false
+              description: ""
+              sortKey: -1778008770952
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Atualiza Aula
+            meta:
+              id: req_e092b1cdd2ef4c23817d32106c20b952
+              created: 1778008806427
+              modified: 1778008810355
+              isPrivate: false
+              description: ""
+              sortKey: -1778008770927
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_aluno": 5,
+                	"status_matricula": "ATIVO",
+                	"data_ingresso": "2026-05-04",
+                	"data_criacao": "2026-05-04T12:10:19.6895321"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: ProfessorTurma
+        meta:
+          id: fld_9e8309f22d2b4d4ea51cfd048500647a
+          created: 1778008846812
+          modified: 1778008846812
+          sortKey: -1778008846812
+          description: ""
+        children:
+          - url: http://localhost:8080/professor-turma/1
+            name: Consultar ProfessorTurma
+            meta:
+              id: req_774fb46e4c944c4e99b85247888865b0
+              created: 1778008866486
+              modified: 1778109580893
+              isPrivate: false
+              description: ""
+              sortKey: -1778008869348
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Cadastrar ProfessorTurma
+            meta:
+              id: req_3af66b877d8d4d85a04083ede16daf08
+              created: 1778008874598
+              modified: 1778109441134
+              isPrivate: false
+              description: ""
+              sortKey: -1778008869248
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_funcionario": 1,
+                	"professor_principal": true,
+                	"data_criacao": "2026-05-06T20:17:10.3861261"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma/5
+            name: Remover ProfessorTurma
+            meta:
+              id: req_b45f86f836144dc495b7d875fa63a7e8
+              created: 1778008884100
+              modified: 1778109450806
+              isPrivate: false
+              description: ""
+              sortKey: -1778008869198
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_funcionario": 1,
+                	"professor_principal": true,
+                	"data_criacao": "2026-05-06T20:17:10.3861261"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/aluno-turma
+            name: Atualiza ProfessorTurma
+            meta:
+              id: req_09814587fbd4464ab56911f6e930b9a5
+              created: 1778008892333
+              modified: 1778008894053
+              isPrivate: false
+              description: ""
+              sortKey: -1778008869173
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"id_turma": 1,
+                	"id_pessoa": 1,
+                	"id_aluno": 5,
+                	"status_matricula": "ATIVO",
+                	"data_ingresso": "2026-05-04",
+                	"data_criacao": "2026-05-04T12:10:19.6895321"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+  - name: Backend Institucional (OK)
+    meta:
+      id: fld_7f550215c4b349fbbc9961df8f80be92
+      created: 1777907489743
+      modified: 1778287695441
+      sortKey: -1778009293487
+      description: ""
+    children:
+      - name: Empresa
+        meta:
+          id: fld_3d559f1c27d342e08428c198c81cc8ef
+          created: 1777907684228
+          modified: 1778287016809
+          sortKey: -1777907684428
+          description: ""
+        children:
+          - url: http://localhost:8000/empresa
+            name: Atualiza Empresa
+            meta:
+              id: req_626fd7af8e884f96acabc0f7f9211bcb
+              created: 1777505123934
+              modified: 1778111767521
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689535
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 2,
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/empresa
+            name: Cadastrar Empresa
+            meta:
+              id: req_4b6f8ca52ba14204b2dceccf75494ae9
+              created: 1777569320463
+              modified: 1778110406680
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689660
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/empresa/1
+            name: Remover Empresa
+            meta:
+              id: req_522f96ecc1d044c9bb2a5c88b44fb0ae
+              created: 1777907920944
+              modified: 1778110384663
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689635
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/empresa/1
+            name: Consulta Empresa
+            meta:
+              id: req_ff6c333c246a409cab922bdaa074a446
+              created: 1777908237504
+              modified: 1778110319958
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689672.5
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Turma
+        meta:
+          id: fld_d4e63013114c4b7682c6cf3ae6715664
+          created: 1777907701407
+          modified: 1777907865661
+          sortKey: -1777907684328
+          description: ""
+        children:
+          - url: http://localhost:8000/turma/2/empresa/1/unidade/3
+            name: Consulta Turma
+            meta:
+              id: req_3f6cc9cbe4b5452a9ef00bb5e9099af8
+              created: 1777908537098
+              modified: 1778111913395
+              isPrivate: false
+              description: ""
+              sortKey: -1777908540681
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/turma
+            name: Cadastrar Turma
+            meta:
+              id: req_2c3de9ff69a04643ae3592b222923ace
+              created: 1777908552475
+              modified: 1778111490388
+              isPrivate: false
+              description: ""
+              sortKey: -1777908540581
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 1,
+                	"id_unidade": 1,
+                	"nome": "Turma 1º Ano A",
+                	"ano_letivo": 2026,
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/turma/1/empresa/1/unidade/1
+            name: Remover Turma
+            meta:
+              id: req_0404fa7bb5cd4ce8b5e91534558c16a8
+              created: 1777908568900
+              modified: 1778111933670
+              isPrivate: false
+              description: ""
+              sortKey: -1777908540481
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/turma
+            name: Atualiza Turma
+            meta:
+              id: req_c9a8252df1d64d0a84bb7af7b3e3f334
+              created: 1777908583216
+              modified: 1778111925508
+              isPrivate: false
+              description: ""
+              sortKey: -1777908540381
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_turma": 2,
+                	"id_empresa": 1,
+                	"id_unidade": 3,
+                	"nome": "Turma 1º Ano A",
+                	"ano_letivo": 2026,
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Unidade
+        meta:
+          id: fld_7e531a0ffcd54ed0ac0d570da2d55811
+          created: 1777908902242
+          modified: 1777908975294
+          sortKey: -1777907684378
+          description: ""
+        children:
+          - url: http://localhost:8000/unidade
+            name: Atualiza Unidade
+            meta:
+              id: req_4887914ad247430d81bc0655b5bdac3f
+              created: 1777908902242
+              modified: 1778111858831
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689535
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_unidade": 3,
+                	"id_empresa": 2,
+                	"nome": "Unidade Centro",
+                	"endereco": "Rua Exemplo, 123",
+                	"telefone": "19999999999",
+                	"email_contato": "contato@unidade.com"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/unidade/1/empresa/1
+            name: Remover Unidade
+            meta:
+              id: req_65a11f9755d644689a5a39da99e1a796
+              created: 1777908902242
+              modified: 1778111015904
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689635
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/unidade
+            name: Cadastrar Unidade
+            meta:
+              id: req_7685a4060f3d4475911dd3edd8e1552d
+              created: 1777908902242
+              modified: 1778110897801
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689660
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"id_empresa": 2,
+                	"nome": "Unidade Centro",
+                	"endereco": "Rua Exemplo, 123",
+                	"telefone": "19999999999",
+                	"email_contato": "contato@unidade.com"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8000/unidade/3/empresa/2
+            name: Consulta Unidade
+            meta:
+              id: req_a3f615a74b004f7dbb6493d2d00e384f
+              created: 1777908902242
+              modified: 1778111030080
+              isPrivate: false
+              description: ""
+              sortKey: -1777907689672.5
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+  - name: Backend Pessoas (OK)
+    meta:
+      id: fld_ed22ec188ede4e17af9850f78b35d4b6
+      created: 1778008942683
+      modified: 1778287709597
+      sortKey: -1778009293437
+      description: ""
+    children:
+      - name: Aluno
+        meta:
+          id: fld_a59297b198c840d7a48fe4848a0072db
+          created: 1778008976145
+          modified: 1778008976145
+          sortKey: -1778008976145
+          description: ""
+        children:
+          - url: http://localhost:8001/aluno/1/pessoa/1
+            name: Consulta Aluno
+            meta:
+              id: req_dddc65f17c6a4c4ab89f5d6ff97fea5d
+              created: 1778008996757
+              modified: 1778288373586
+              isPrivate: false
+              description: ""
+              sortKey: -1778009000325
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/aluno
+            name: Cadastrar Aluno
+            meta:
+              id: req_ce5cf0430d134ba287d5a4f92708fa12
+              created: 1778009005483
+              modified: 1778288431029
+              isPrivate: false
+              description: ""
+              sortKey: -1778009000225
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idPessoa": 1,
+                	"nomeChamada": "Joãozinho"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/aluno/1/pessoa/1
+            name: Remover Aluno
+            meta:
+              id: req_4e872beeed784283b76b0f481d6e4ee7
+              created: 1778009014225
+              modified: 1778288448404
+              isPrivate: false
+              description: ""
+              sortKey: -1778009000175
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/aluno
+            name: Atualiza Aluno
+            meta:
+              id: req_051005941b3341afa2fd24bf16a1a83f
+              created: 1778009021593
+              modified: 1778288515221
+              isPrivate: false
+              description: ""
+              sortKey: -1778009000150
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idAluno": 1,
+                	"idPessoa": 1,
+                	"nomeChamada": "Joãozinho"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Funcionario
+        meta:
+          id: fld_c802525d0aeb464597f01a990f1d7227
+          created: 1778009050031
+          modified: 1778009050031
+          sortKey: -1778009050031
+          description: ""
+        children:
+          - url: http://localhost:8001/funcionario/pessoa/1/papel/1
+            name: Consulta Funcionario
+            meta:
+              id: req_aba9c35f6fbd4c7fa5b7223335e939ee
+              created: 1778009068957
+              modified: 1778287556515
+              isPrivate: false
+              description: ""
+              sortKey: -1778009076639
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/funcionario
+            name: Cadastrar Funcionario
+            meta:
+              id: req_0355790275d54149aa009bb00b23447e
+              created: 1778009091325
+              modified: 1778287526180
+              isPrivate: false
+              description: ""
+              sortKey: -1778009076539
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idPessoa": 1,
+                	"idPapel": 1,
+                	"nomeUsuario": "joao",
+                	"senha": "123456",
+                	"ultimoLogin": "2026-05-08T21:43:45.283874",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/funcionario/pessoa/1/papel/1
+            name: Remover Funcionario
+            meta:
+              id: req_4e797274d04f4d83b69cc4d2058b8c39
+              created: 1778009099702
+              modified: 1778287513185
+              isPrivate: false
+              description: ""
+              sortKey: -1778009076489
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/funcionario
+            name: Atualiza Funcionario
+            meta:
+              id: req_ee875a5848ef446b9d9dfd06257a6eab
+              created: 1778009106308
+              modified: 1778287571699
+              isPrivate: false
+              description: ""
+              sortKey: -1778009076464
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idFuncionario": null,
+                	"idPessoa": 1,
+                	"idPapel": 1,
+                	"nomeUsuario": "joao",
+                	"senha": "123456",
+                	"ultimoLogin": "2026-05-08T21:43:45.283874",
+                	"ativo": true,
+                	"dataCriacao": "2026-05-08T21:43:45.283874",
+                	"dataModificacao": "2026-05-08T21:43:45.283874"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Papel Funcao
+        meta:
+          id: fld_8410952e861f4740b52e66c6639854c6
+          created: 1778009135020
+          modified: 1778009135020
+          sortKey: -1778009135020
+          description: ""
+        children:
+          - url: http://localhost:8001/papel-funcao/1
+            name: Consulta PapelFuncao
+            meta:
+              id: req_6a18debb82c049ab90510fab6e882d43
+              created: 1778009158951
+              modified: 1778287160621
+              isPrivate: false
+              description: ""
+              sortKey: -1778009183449
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/papel-funcao
+            name: Cadastrar PapelFuncao
+            meta:
+              id: req_ce3c96eeb7d94ad5a689bb74a10ef48b
+              created: 1778009175153
+              modified: 1778287189852
+              isPrivate: false
+              description: ""
+              sortKey: -1778009183349
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+
+                	"sigla": "PROFESSOR",
+                	"descricao": "Professor responsável pelas aulas e diários",
+                	"nivelHierarquico": 4
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/papel-funcao/1
+            name: Remover PapelFuncao
+            meta:
+              id: req_a89353997bd747ddac3ae9b715deaa30
+              created: 1778009190879
+              modified: 1778287216875
+              isPrivate: false
+              description: ""
+              sortKey: -1778009183199
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/papel-funcao
+            name: Atualiza PapelFuncao
+            meta:
+              id: req_47182816d6b141fe83ddab8823e3bbbb
+              created: 1778009201376
+              modified: 1778287254949
+              isPrivate: false
+              description: ""
+              sortKey: -1778009183174
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idPapel": 1,
+                	"sigla": "PROFESSOR",
+                	"descricao": "Professor responsável pelas aulas e diários",
+                	"nivelHierarquico": 4
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Pessoa
+        meta:
+          id: fld_f93fa03c172f45d68627f06a04e34ec4
+          created: 1778009219874
+          modified: 1778009219874
+          sortKey: -1778009219874
+          description: ""
+        children:
+          - url: http://localhost:8001/pessoa
+            name: Cadastrar Pessoa
+            meta:
+              id: req_d14638cf234940f4857b761b63348e6d
+              created: 1778009230664
+              modified: 1778287053831
+              isPrivate: false
+              description: ""
+              sortKey: -1778009246787
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "João da Silva",
+                	"cpf": "12345678901",
+                	"dataNascimento": "2010-05-20",
+                	"email": "joao@email.com",
+                	"telefone": "19988887777"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/pessoa/1
+            name: Consulta Pessoa
+            meta:
+              id: req_eb89a02d5b634ab9b438de4aac682cc8
+              created: 1778009238364
+              modified: 1778287034398
+              isPrivate: false
+              description: ""
+              sortKey: -1778009246887
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/pessoa/1
+            name: Remover Pessoa
+            meta:
+              id: req_e4b1c7a2a41b4859825336387f2fb235
+              created: 1778009253828
+              modified: 1778287059375
+              isPrivate: false
+              description: ""
+              sortKey: -1778009246637
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8001/pessoa
+            name: Atualiza Pessoa
+            meta:
+              id: req_b0b448f347504add9ce183ab30e7a930
+              created: 1778009262850
+              modified: 1778287081598
+              isPrivate: false
+              description: ""
+              sortKey: -1778009246612
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "João da Silva",
+                	"cpf": "12345678901",
+                	"dataNascimento": "2010-05-20",
+                	"email": "joao@email.com",
+                	"telefone": "19988887777"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+  - name: Backend Pedagogico (Incompleto)
+    meta:
+      id: fld_11eebb7b4bec42029d5daf8c6b639a10
+      created: 1778009293387
+      modified: 1778287667017
+      sortKey: -1778009293387
+      description: ""
+    children:
+      - name: Diario Audio
+        meta:
+          id: fld_ad4e63083bde4d899d3b6f1e62d8026b
+          created: 1778009305661
+          modified: 1778009305661
+          sortKey: -1778009305661
+          description: ""
+        children:
+          - url: http://localhost:8080/empresa
+            name: Cadastrar DiarioAudio
+            meta:
+              id: req_f301a73e501243a19d68d2b84ffba568
+              created: 1778009322378
+              modified: 1778009336730
+              isPrivate: false
+              description: ""
+              sortKey: -1778009335135
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Consulta DiarioAudio
+            meta:
+              id: req_676244b979d34fd2bbfd206a67ea71d6
+              created: 1778009329052
+              modified: 1778009353143
+              isPrivate: false
+              description: ""
+              sortKey: -1778009335235
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Remover DiarioAudio
+            meta:
+              id: req_8857339fe3cd4a468c4cb41399fb8ac7
+              created: 1778009343296
+              modified: 1778009344932
+              isPrivate: false
+              description: ""
+              sortKey: -1778009335085
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Atualiza DiarioAudio
+            meta:
+              id: req_9ebbe606cd4e494cba4930afb27d1c21
+              created: 1778009349830
+              modified: 1778009351602
+              isPrivate: false
+              description: ""
+              sortKey: -1778009335060
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Diario Educacional
+        meta:
+          id: fld_56c74a7a1ec342cb93b3146c5a5f69dc
+          created: 1778009375070
+          modified: 1778009375070
+          sortKey: -1778009375070
+          description: ""
+        children:
+          - url: http://localhost:8080/empresa/1
+            name: Consulta DiarioEducacional
+            meta:
+              id: req_b55e246b229c4c69a672367c29b20e46
+              created: 1778009388803
+              modified: 1778009413124
+              isPrivate: false
+              description: ""
+              sortKey: -1778009390834
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa
+            name: Cadastrar DiarioEducacional
+            meta:
+              id: req_896987f3a28e427dbb594852c1a84c37
+              created: 1778009395326
+              modified: 1778009396945
+              isPrivate: false
+              description: ""
+              sortKey: -1778009390734
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Remover DiarioEducacional
+            meta:
+              id: req_7ee06b304791468684587240f1384fa4
+              created: 1778009401718
+              modified: 1778009403877
+              isPrivate: false
+              description: ""
+              sortKey: -1778009390684
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Atualiza DiarioEducacional
+            meta:
+              id: req_72590003c5ec4e0cb32dc3dcee53ef89
+              created: 1778009408935
+              modified: 1778009411028
+              isPrivate: false
+              description: ""
+              sortKey: -1778009390659
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Resumo Audio
+        meta:
+          id: fld_522d6c2221764c109ec097936fb3da33
+          created: 1778009424765
+          modified: 1778009424765
+          sortKey: -1778009424765
+          description: ""
+        children:
+          - url: http://localhost:8080/empresa/1
+            name: Consulta ResumoAudio
+            meta:
+              id: req_332a73afc74b4e4fb83e65e198330b08
+              created: 1778009438889
+              modified: 1778009471706
+              isPrivate: false
+              description: ""
+              sortKey: -1778009453134
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa
+            name: Cadastrar ResumoAudio
+            meta:
+              id: req_e22f6b795e03482497da65c07713734e
+              created: 1778009447102
+              modified: 1778009474962
+              isPrivate: false
+              description: ""
+              sortKey: -1778009453084
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Remover ResumoAudio
+            meta:
+              id: req_226cc63d34df439dbb48f61988c78cd2
+              created: 1778009459736
+              modified: 1778009461490
+              isPrivate: false
+              description: ""
+              sortKey: -1778009453034
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Atualiza ResumoAudio
+            meta:
+              id: req_2959ae62f44344f49795e2b2651fae4f
+              created: 1778009467087
+              modified: 1778009470093
+              isPrivate: false
+              description: ""
+              sortKey: -1778009452984
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Resumo Educacional
+        meta:
+          id: fld_0ecf36f5c1cb4af192762c05b83e98bd
+          created: 1778009493373
+          modified: 1778009493373
+          sortKey: -1778009493373
+          description: ""
+        children:
+          - url: http://localhost:8080/empresa/1
+            name: Consulta ResumoEducacional
+            meta:
+              id: req_58575e7d99b9402a9f3b45fc3a72333e
+              created: 1778009506524
+              modified: 1778009540076
+              isPrivate: false
+              description: ""
+              sortKey: -1778009521813
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa
+            name: Cadastrar ResumoEducacional
+            meta:
+              id: req_a37ad675b8f24e9f87770b1eb095e972
+              created: 1778009514974
+              modified: 1778009542385
+              isPrivate: false
+              description: ""
+              sortKey: -1778009521763
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Remover ResumoEducacional
+            meta:
+              id: req_fe5f63fbc524441e823b391858430e6c
+              created: 1778009529587
+              modified: 1778009531360
+              isPrivate: false
+              description: ""
+              sortKey: -1778009521713
+            method: DELETE
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Atualiza ResumoEducacional
+            meta:
+              id: req_7461a282d3684632a52d80f594f44e2a
+              created: 1778009536416
+              modified: 1778009538803
+              isPrivate: false
+              description: ""
+              sortKey: -1778009521663
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Transcricao
+        meta:
+          id: fld_6190ddd4ce7845eb80d06ad079820c02
+          created: 1778009553739
+          modified: 1778009553739
+          sortKey: -1778009553739
+          description: ""
+        children:
+          - url: http://localhost:8000/transcricao/1
+            name: Consulta Transcricao
+            meta:
+              id: req_62d981a375804479ab0d0cecfe71f3bf
+              created: 1778009563936
+              modified: 1778110044392
+              isPrivate: false
+              description: ""
+              sortKey: -1778009582702
+            method: GET
+            headers:
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa
+            name: Cadastrar Transcricao
+            meta:
+              id: req_a2107eb2077c45549337e2d4255d61c4
+              created: 1778009577167
+              modified: 1778009604614
+              isPrivate: false
+              description: ""
+              sortKey: -1778009582677
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Remover Transcricao
+            meta:
+              id: req_add9c8dcab8f4b9d903db3245ef8890d
+              created: 1778009591630
+              modified: 1778110120780
+              isPrivate: false
+              description: ""
+              sortKey: -1778009582652
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"idTranscricao": 1,
+                	"idAudio": 1,
+                	"idDiario": 1,
+                	"idAula": 1,
+                	"idEmpresa": 1,
+                	"idUnidade": 1,
+                	"idTurma": 1,
+                	"idPessoa": 1,
+                	"idFuncionario": 1
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:8080/empresa/1
+            name: Atualiza Transcricao
+            meta:
+              id: req_b97f24810d5c41c6897b999bbc8cec09
+              created: 1778009599757
+              modified: 1778009601721
+              isPrivate: false
+              description: ""
+              sortKey: -1778009582627
+            method: PATCH
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"nome": "Ursinho Pimpao",
+                	"cnpj": "12312312312",
+                	"ativo": true
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+              - name: User-Agent
+                value: insomnia/12.5.0
+                description: ""
+                disabled: false
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_5ba26b317a446f0cdecb2586b5852c80c461eb05
+    created: 1777505100064
+    modified: 1777505100064
+environments:
+  name: Base Environment
+  meta:
+    id: env_5ba26b317a446f0cdecb2586b5852c80c461eb05
+    created: 1777505100059
+    modified: 1777505100059
+    isPrivate: false
