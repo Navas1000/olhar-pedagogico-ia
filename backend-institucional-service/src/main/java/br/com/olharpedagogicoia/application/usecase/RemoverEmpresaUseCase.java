@@ -3,22 +3,22 @@ package br.com.olharpedagogicoia.application.usecase;
 import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
 import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
 import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
+import br.com.olharpedagogicoia.application.port.in.RemoverEmpresaPortIn;
 import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
+import br.com.olharpedagogicoia.application.port.out.RemoverEmpresaPortOut;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class ConsultarEmpresaUseCase implements ConsultarEmpresaPortIn {
+public class RemoverEmpresaUseCase implements RemoverEmpresaPortIn {
 
-    final ConsultarEmpresaPortOut consultarEmpresaPortOut;
+    final RemoverEmpresaPortOut removerEmpresaPortOut;
 
     @Override
-    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException {
+    public void remover(final Integer idEmpresa) throws EmpresaNaoEncontradaException {
 
-        return consultarEmpresaPortOut.consultar(id);
-
-
+        removerEmpresaPortOut.remover(idEmpresa);
 
     }
 }

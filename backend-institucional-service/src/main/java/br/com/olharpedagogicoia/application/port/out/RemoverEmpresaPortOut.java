@@ -3,8 +3,8 @@ package br.com.olharpedagogicoia.application.port.out;
 import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
 import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
 
-public interface ConsultarEmpresaPortOut {
+public interface RemoverEmpresaPortOut {
 
-    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException;
+    public void remover(final Integer idEmpresa) throws EmpresaNaoEncontradaException;
 
 }

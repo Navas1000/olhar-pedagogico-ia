@@ -6,30 +6,29 @@ import br.com.olharpedagogicoia.adapters.out.empresa.repository.EmpresaRepositor
 import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
 import br.com.olharpedagogicoia.application.exceptions.Constantes;
 import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
-import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
 import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
+import br.com.olharpedagogicoia.application.port.out.RemoverEmpresaPortOut;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EmpresaRepositoryAdapter implements ConsultarEmpresaPortOut {
+public class RemoverEmpresaRepositoryAdapter implements RemoverEmpresaPortOut {
 
     private final EmpresaRepository empresaRepository;
     private final EmpresaMapper empresaMapper;
 
-    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException {
+    public void remover(final Integer idEmpresa) throws EmpresaNaoEncontradaException {
 
-        final Optional<EmpresaEntity> empresaOpcional = empresaRepository.findById(id);
+        final Optional<EmpresaEntity> empresaOpcional = empresaRepository.findById(idEmpresa);
 
         if (empresaOpcional.isPresent())
-            return empresaMapper.deEmpresaEntityParaEmpresaDTO(empresaOpcional.get());
+            empresaRepository.deleteById(idEmpresa);
 
-        throw new EmpresaNaoEncontradaException(Constantes.EMPRESA_NAO_ENCONTRADA);
+        else
+            throw new EmpresaNaoEncontradaException(Constantes.EMPRESA_NAO_ENCONTRADA);
 
     }
 
