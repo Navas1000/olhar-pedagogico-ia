@@ -5,6 +5,6 @@ import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaExcep
 
 public interface ConsultarEmpresaPortIn {
 
-    public EmpresaDTO consultar(Integer id) throws EmpresaNaoEncontradaException;
+    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException;
 
 }

@@ -4,6 +4,6 @@ import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
 
 public interface CadastrarEmpresaPortIn {
 
-    public EmpresaDTO cadastrar(EmpresaDTO empresaDTO);
+    public EmpresaDTO cadastrar(final EmpresaDTO empresaDTO);
 
 }

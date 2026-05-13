@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,8 +42,9 @@ public class EmpresaAdapter {
     @PostMapping
     public ResponseEntity<EmpresaDTO> cadastraEmpresa(@RequestBody EmpresaDTO empresaDTO) {
 
-        System.out.println("Estou cadastrando a empresa");
-        return ResponseEntity.status(HttpStatus.CREATED).body(empresaDTO);
+        final EmpresaDTO empresaCadastrada = cadastrarEmpresaPortIn.cadastrar(empresaDTO);
+
+         return  ResponseEntity.status(HttpStatus.CREATED).body(empresaCadastrada);
     }
 
     @DeleteMapping("/{idEmpresa}")
