@@ -1,10 +1,7 @@
 package br.com.olharpedagogicoia.application.usecase;
 
-import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
 import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
-import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverEmpresaPortIn;
-import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
 import br.com.olharpedagogicoia.application.port.out.RemoverEmpresaPortOut;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

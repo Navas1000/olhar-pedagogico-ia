@@ -1,7 +1,6 @@
 package br.com.olharpedagogicoia.adapters.in;
 
-import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
-import br.com.olharpedagogicoia.application.dto.TurmaDTO;
+import br.com.olharpedagogicoia.application.dto.TurmaDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +12,11 @@ import java.time.LocalDateTime;
 public class TurmaAdapter {
 
     @GetMapping("/{id}/empresa/{idEmpresa}/unidade/{idUnidade}")
-    public ResponseEntity<TurmaDTO> consultaTurma(@PathVariable Integer id,
+    public ResponseEntity<TurmaDto> consultaTurma(@PathVariable Integer id,
                                                   @PathVariable Integer idEmpresa,
                                                   @PathVariable Integer idUnidade) {
 
-        TurmaDTO turmaConsultada = new TurmaDTO();
+        TurmaDto turmaConsultada = new TurmaDto();
 
         turmaConsultada.setIdTurma(id);
         turmaConsultada.setIdEmpresa(idEmpresa);
@@ -32,7 +31,7 @@ public class TurmaAdapter {
     }
 
     @PostMapping
-    public ResponseEntity<TurmaDTO> cadastraTurma(@RequestBody TurmaDTO turmaDTO) {
+    public ResponseEntity<TurmaDto> cadastraTurma(@RequestBody TurmaDto turmaDTO) {
 
         System.out.println("Estou cadastrando a turma");
         return ResponseEntity.status(HttpStatus.CREATED).body(turmaDTO);
@@ -48,7 +47,7 @@ public class TurmaAdapter {
     }
 
     @PatchMapping()
-    public ResponseEntity<TurmaDTO> atualizaTurma (@RequestBody TurmaDTO turmaDTO) {
+    public ResponseEntity<TurmaDto> atualizaTurma (@RequestBody TurmaDto turmaDTO) {
 
         System.out.println("Estou atualizando a turma " + turmaDTO.getIdTurma());
         return ResponseEntity.status(HttpStatus.CREATED).body(turmaDTO);

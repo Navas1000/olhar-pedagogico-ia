@@ -3,26 +3,23 @@ package br.com.olharpedagogicoia.adapters.out.empresa;
 import br.com.olharpedagogicoia.adapters.out.empresa.entity.EmpresaEntity;
 import br.com.olharpedagogicoia.adapters.out.empresa.mapper.EmpresaMapper;
 import br.com.olharpedagogicoia.adapters.out.empresa.repository.EmpresaRepository;
-import br.com.olharpedagogicoia.application.dto.EmpresaDTO;
+import br.com.olharpedagogicoia.application.dto.EmpresaDto;
 import br.com.olharpedagogicoia.application.exceptions.Constantes;
 import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
-import br.com.olharpedagogicoia.application.port.in.ConsultarEmpresaPortIn;
 import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class EmpresaRepositoryAdapter implements ConsultarEmpresaPortOut {
+public class ConsultarEmpresaRepositoryAdapter implements ConsultarEmpresaPortOut {
 
     private final EmpresaRepository empresaRepository;
     private final EmpresaMapper empresaMapper;
 
-    public EmpresaDTO consultar(final Integer id) throws EmpresaNaoEncontradaException {
+    public EmpresaDto consultar(final Integer id) throws EmpresaNaoEncontradaException {
 
         final Optional<EmpresaEntity> empresaOpcional = empresaRepository.findById(id);
 

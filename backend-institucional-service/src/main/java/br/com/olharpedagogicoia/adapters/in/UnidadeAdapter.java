@@ -1,7 +1,6 @@
 package br.com.olharpedagogicoia.adapters.in;
 
-import br.com.olharpedagogicoia.application.dto.TurmaDTO;
-import br.com.olharpedagogicoia.application.dto.UnidadeDTO;
+import br.com.olharpedagogicoia.application.dto.UnidadeDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +12,10 @@ import java.time.LocalDateTime;
 public class UnidadeAdapter {
 
     @GetMapping("/{id}/empresa/{idEmpresa}")
-    public ResponseEntity<UnidadeDTO> consultaUnidade(@PathVariable Integer id,
+    public ResponseEntity<UnidadeDto> consultaUnidade(@PathVariable Integer id,
                                                       @PathVariable Integer idEmpresa) {
 
-        UnidadeDTO unidadeConsultada = new UnidadeDTO();
+        UnidadeDto unidadeConsultada = new UnidadeDto();
 
         unidadeConsultada.setIdUnidade(id);
         unidadeConsultada.setIdEmpresa(idEmpresa);
@@ -31,7 +30,7 @@ public class UnidadeAdapter {
     }
 
     @PostMapping
-    public ResponseEntity<UnidadeDTO> cadastraUnidade(@RequestBody UnidadeDTO unidadeDTO) {
+    public ResponseEntity<UnidadeDto> cadastraUnidade(@RequestBody UnidadeDto unidadeDTO) {
 
         System.out.println("Estou cadastrando a unidade");
         return ResponseEntity.status(HttpStatus.CREATED).body(unidadeDTO);
@@ -46,7 +45,7 @@ public class UnidadeAdapter {
     }
 
     @PatchMapping()
-    public ResponseEntity<UnidadeDTO> atualizaUnidade (@RequestBody UnidadeDTO unidadeDTO) {
+    public ResponseEntity<UnidadeDto> atualizaUnidade (@RequestBody UnidadeDto unidadeDTO) {
 
         System.out.println("Estou atualizando a unidade " + unidadeDTO.getIdUnidade());
         return ResponseEntity.status(HttpStatus.CREATED).body(unidadeDTO);

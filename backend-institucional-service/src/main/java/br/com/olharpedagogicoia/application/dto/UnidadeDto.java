@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class TurmaDTO {
-    private Integer idTurma;
-    private Integer idEmpresa;
+public class UnidadeDto {
     private Integer idUnidade;
+    private Integer idEmpresa;
     private String nome;
-    private Integer anoLetivo;
-    private Boolean ativo;
+    private String endereco;
+    private String telefone;
+    private String emailContato;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataModificacao;
 }
