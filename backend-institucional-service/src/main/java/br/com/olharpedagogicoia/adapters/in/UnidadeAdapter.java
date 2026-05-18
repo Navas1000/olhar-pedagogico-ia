@@ -1,47 +1,65 @@
 package br.com.olharpedagogicoia.adapters.in;
 
+import br.com.olharpedagogicoia.application.dto.EmpresaDto;
 import br.com.olharpedagogicoia.application.dto.UnidadeDto;
+import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.exceptions.UnidadeNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.*;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/unidade")
+@AllArgsConstructor
 public class UnidadeAdapter {
 
-    @GetMapping("/{id}/empresa/{idEmpresa}")
-    public ResponseEntity<UnidadeDto> consultaUnidade(@PathVariable Integer id,
-                                                      @PathVariable Integer idEmpresa) {
+    private final ConsultarUnidadePortIn consultarUnidadePortIn;
+    private final RemoverUnidadePortIn removerUnidadePortIn;
+    private final CadastrarUnidadePortIn cadastrarUnidadePortIn;
 
-        UnidadeDto unidadeConsultada = new UnidadeDto();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaUnidade(@PathVariable Integer id) {
 
-        unidadeConsultada.setIdUnidade(id);
-        unidadeConsultada.setIdEmpresa(idEmpresa);
-        unidadeConsultada.setNome("Unidade Centro");
-        unidadeConsultada.setEndereco("Rua Exemplo, 123");
-        unidadeConsultada.setTelefone("19999999999");
-        unidadeConsultada.setEmailContato("contato@unidade.com");
-        unidadeConsultada.setDataCriacao(LocalDateTime.now());
-        unidadeConsultada.setDataModificacao(LocalDateTime.now());
+        try {
+            final UnidadeDto unidadeConsultada = consultarUnidadePortIn.consultar(id);
+            return ResponseEntity.ok(unidadeConsultada);
+        } catch (UnidadeNaoEncontradaException excecao) {
 
-        return ResponseEntity.ok(unidadeConsultada);
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<UnidadeDto> cadastraUnidade(@RequestBody UnidadeDto unidadeDTO) {
+    public ResponseEntity<UnidadeDto> cadastraUnidade(@RequestBody @Valid UnidadeDto unidadeDTO) {
 
-        System.out.println("Estou cadastrando a unidade");
-        return ResponseEntity.status(HttpStatus.CREATED).body(unidadeDTO);
+        final UnidadeDto unidadeCadastrada = cadastrarUnidadePortIn.cadastrar(unidadeDTO);
+
+        return  ResponseEntity.status(HttpStatus.CREATED).body(unidadeCadastrada);
     }
-    @DeleteMapping("/{id}/empresa/{idEmpresa}")
-    public ResponseEntity<Void> removerUnidade (@PathVariable Integer id,
-                                                @PathVariable Integer idEmpresa) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removerUnidade (@PathVariable Integer id) {
 
-        System.out.println("Removendo unidade");
-        return ResponseEntity.noContent().build();
+        try {
+            removerUnidadePortIn.remover(id);
 
+        } catch (UnidadeNaoEncontradaException excecao) {
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PatchMapping()
