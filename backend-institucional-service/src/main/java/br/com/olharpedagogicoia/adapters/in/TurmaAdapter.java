@@ -1,55 +1,84 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.TurmaDto;
+import br.com.olharpedagogicoia.application.exceptions.IdTurmaObrigatorioException;
+import br.com.olharpedagogicoia.application.exceptions.TurmaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.*;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/turma")
+@AllArgsConstructor
 public class TurmaAdapter {
 
-    @GetMapping("/{id}/empresa/{idEmpresa}/unidade/{idUnidade}")
-    public ResponseEntity<TurmaDto> consultaTurma(@PathVariable Integer id,
-                                                  @PathVariable Integer idEmpresa,
-                                                  @PathVariable Integer idUnidade) {
+    private final ConsultarTurmaPortIn consultarTurmaPortIn;
+    private final RemoverTurmaPortIn removerTurmaPortIn;
+    private final CadastrarTurmaPortIn cadastrarTurmaPortIn;
+    private final AtualizarTurmaPortIn atualizarTurmaPortIn;
 
-        TurmaDto turmaConsultada = new TurmaDto();
 
-        turmaConsultada.setIdTurma(id);
-        turmaConsultada.setIdEmpresa(idEmpresa);
-        turmaConsultada.setIdUnidade(idUnidade);
-        turmaConsultada.setNome("Turma 1º Ano A");
-        turmaConsultada.setAnoLetivo(2026);
-        turmaConsultada.setAtivo(true);
-        turmaConsultada.setDataCriacao(LocalDateTime.now());
-        turmaConsultada.setDataModificacao(LocalDateTime.now());
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaTurma(@PathVariable Integer id) {
 
-        return ResponseEntity.ok(turmaConsultada);
+        try {
+            final TurmaDto turmaConsultada = consultarTurmaPortIn.consultar(id);
+            return ResponseEntity.ok(turmaConsultada);
+
+        } catch (TurmaNaoEncontradaException excecao) {
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<TurmaDto> cadastraTurma(@RequestBody TurmaDto turmaDTO) {
+    public ResponseEntity<TurmaDto> cadastraTurma(@RequestBody @Valid TurmaDto turmaDto) {
 
-        System.out.println("Estou cadastrando a turma");
-        return ResponseEntity.status(HttpStatus.CREATED).body(turmaDTO);
+        final TurmaDto turmaCadastrada = cadastrarTurmaPortIn.cadastrar(turmaDto);
+
+        return  ResponseEntity.status(HttpStatus.CREATED).body(turmaCadastrada);
     }
-    @DeleteMapping("/{id}/empresa/{idEmpresa}/unidade/{idUnidade}")
-    public ResponseEntity<Void> removerTurma (@PathVariable Integer id,
-                                              @PathVariable Integer idEmpresa,
-                                              @PathVariable Integer idUnidade) {
 
-        System.out.println("Removendo turma");
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removerTurma (@PathVariable Integer id) {
 
+        try {
+            removerTurmaPortIn.remover(id);
+
+        } catch (TurmaNaoEncontradaException excecao) {
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PatchMapping()
-    public ResponseEntity<TurmaDto> atualizaTurma (@RequestBody TurmaDto turmaDTO) {
+    public ResponseEntity<?> atualizaTurma (@RequestBody @Valid TurmaDto turmaDTO){
 
-        System.out.println("Estou atualizando a turma " + turmaDTO.getIdTurma());
-        return ResponseEntity.status(HttpStatus.CREATED).body(turmaDTO);
-    }
+            try {
+                final TurmaDto turmaAtualizada = atualizarTurmaPortIn.atualizar(turmaDTO);
+
+                return ResponseEntity.ok(turmaAtualizada);
+
+            } catch (TurmaNaoEncontradaException | IdTurmaObrigatorioException excecao) {
+
+                final Map<String, String> erro = new HashMap<>();
+                erro.put("mensagem", excecao.getMessage());
+
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+            }
+        }
 }

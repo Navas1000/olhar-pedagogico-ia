@@ -1,8 +1,7 @@
 package br.com.olharpedagogicoia.adapters.in;
 
-import br.com.olharpedagogicoia.application.dto.EmpresaDto;
 import br.com.olharpedagogicoia.application.dto.UnidadeDto;
-import br.com.olharpedagogicoia.application.exceptions.EmpresaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.exceptions.IdUnidadeObrigatorioException;
 import br.com.olharpedagogicoia.application.exceptions.UnidadeNaoEncontradaException;
 import br.com.olharpedagogicoia.application.port.in.*;
 import jakarta.validation.Valid;
@@ -22,6 +21,7 @@ public class UnidadeAdapter {
     private final ConsultarUnidadePortIn consultarUnidadePortIn;
     private final RemoverUnidadePortIn removerUnidadePortIn;
     private final CadastrarUnidadePortIn cadastrarUnidadePortIn;
+    private final AtualizarUnidadePortIn atualizarUnidadePortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaUnidade(@PathVariable Integer id) {
@@ -63,9 +63,18 @@ public class UnidadeAdapter {
     }
 
     @PatchMapping()
-    public ResponseEntity<UnidadeDto> atualizaUnidade (@RequestBody UnidadeDto unidadeDTO) {
+    public ResponseEntity<?> atualizaUnidade (@RequestBody @Valid UnidadeDto unidadeDTO) {
 
-        System.out.println("Estou atualizando a unidade " + unidadeDTO.getIdUnidade());
-        return ResponseEntity.status(HttpStatus.CREATED).body(unidadeDTO);
+        try {
+            final UnidadeDto unidadeAtualizada = atualizarUnidadePortIn.atualizar(unidadeDTO);
+
+            return ResponseEntity.ok(unidadeAtualizada);
+        } catch (UnidadeNaoEncontradaException | IdUnidadeObrigatorioException excecao) {
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }
