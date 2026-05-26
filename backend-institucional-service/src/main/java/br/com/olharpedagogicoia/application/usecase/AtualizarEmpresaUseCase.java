@@ -23,7 +23,8 @@ public class AtualizarEmpresaUseCase implements AtualizarEmpresaPortIn {
     final ConsultarEmpresaPortOut consultarEmpresaPortOut;
 
     @Override
-    public EmpresaDto atualizar(final EmpresaDto empresaDTO) throws EmpresaNaoEncontradaException, IdEmpresaObrigatorioException {
+    public EmpresaDto atualizar(final EmpresaDto empresaDTO) throws EmpresaNaoEncontradaException,
+                                                                    IdEmpresaObrigatorioException {
 
         if(Objects.isNull(empresaDTO.getIdEmpresa()))
             throw new IdEmpresaObrigatorioException(Constantes.ID_EMPRESA_OBRIGATORIO);

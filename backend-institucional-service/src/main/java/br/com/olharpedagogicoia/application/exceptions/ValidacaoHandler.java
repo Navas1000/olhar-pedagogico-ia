@@ -17,14 +17,14 @@ public class ValidacaoHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErroValidacaoDto> handle(final MethodArgumentNotValidException exception) {
-        final List<ErroValidacaoDto> dto = new ArrayList<>();
+    public List<ErroValidacaoDto> handle(final MethodArgumentNotValidException excecao) {
+        final List<ErroValidacaoDto> listaDeValidacoesDto = new ArrayList<>();
 
-        final List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        fieldErrors.forEach(e -> {
+        final List<FieldError> listaDeErros = excecao.getBindingResult().getFieldErrors();
+        listaDeErros.forEach(e -> {
             final ErroValidacaoDto erro = new ErroValidacaoDto(e.getField(), e.getDefaultMessage());
-            dto.add(erro);
+            listaDeValidacoesDto.add(erro);
         });
-        return dto;
+        return listaDeValidacoesDto;
     }
 }
