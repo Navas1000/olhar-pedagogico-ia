@@ -12,7 +12,7 @@ services:
     ports:
       - "8000:8000"
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8000/actuator/health"]
+      test: ["CMD", "wget", "-q", "http://backend-institucional-service:8000/actuator/health"]
       interval: 10s
       timeout: 5s
       retries: 5
