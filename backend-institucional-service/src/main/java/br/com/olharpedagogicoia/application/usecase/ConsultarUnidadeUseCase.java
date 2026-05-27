@@ -6,8 +6,10 @@ import br.com.olharpedagogicoia.application.exceptions.UnidadeNaoEncontradaExcep
 import br.com.olharpedagogicoia.application.port.in.ConsultarUnidadePortIn;
 import br.com.olharpedagogicoia.application.port.out.ConsultarUnidadePortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class ConsultarUnidadeUseCase implements ConsultarUnidadePortIn {
@@ -17,7 +19,9 @@ public class ConsultarUnidadeUseCase implements ConsultarUnidadePortIn {
     @Override
     public UnidadeDto consultar(final Integer id) throws UnidadeNaoEncontradaException {
 
-        return consultarUnidadePortOut.consultar(id);
+        UnidadeDto unidadeDto = consultarUnidadePortOut.consultar(id);
+        log.info("Unidade consultada com sucesso: {}", unidadeDto);
+        return unidadeDto;
 
 
 

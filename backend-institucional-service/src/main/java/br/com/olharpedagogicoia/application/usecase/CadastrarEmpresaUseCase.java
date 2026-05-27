@@ -4,10 +4,12 @@ import br.com.olharpedagogicoia.application.dto.EmpresaDto;
 import br.com.olharpedagogicoia.application.port.in.CadastrarEmpresaPortIn;
 import br.com.olharpedagogicoia.application.port.out.CadastrarEmpresaPortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class CadastrarEmpresaUseCase implements CadastrarEmpresaPortIn {
@@ -19,7 +21,11 @@ public class CadastrarEmpresaUseCase implements CadastrarEmpresaPortIn {
 
         empresaDTO.setDataModificacao(LocalDateTime.now());
         empresaDTO.setDataCriacao(LocalDateTime.now());
-        return cadastrarEmpresaPortOut.cadastrar(empresaDTO);
+
+        final EmpresaDto empresaDto = cadastrarEmpresaPortOut.cadastrar(empresaDTO);
+
+        log.info("Empresa cadastrada com sucesso: {}", empresaDto);
+        return empresaDto;
 
 
     }

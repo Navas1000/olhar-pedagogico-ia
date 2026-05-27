@@ -7,8 +7,10 @@ import br.com.olharpedagogicoia.application.port.in.RemoverUnidadePortIn;
 import br.com.olharpedagogicoia.application.port.out.RemoverTurmaPortOut;
 import br.com.olharpedagogicoia.application.port.out.RemoverUnidadePortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class RemoverTurmaUseCase implements RemoverTurmaPortIn {
@@ -18,6 +20,7 @@ public class RemoverTurmaUseCase implements RemoverTurmaPortIn {
     @Override
     public void remover(final Integer id) throws TurmaNaoEncontradaException {
 
+        log.info("Turma removida com sucesso: {}", id);
         removerTurmaPortOut.remover(id);
 
     }

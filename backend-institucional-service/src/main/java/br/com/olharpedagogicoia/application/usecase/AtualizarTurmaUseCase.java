@@ -8,11 +8,13 @@ import br.com.olharpedagogicoia.application.port.in.AtualizarTurmaPortIn;
 import br.com.olharpedagogicoia.application.port.out.AtualizarTurmaPortOut;
 import br.com.olharpedagogicoia.application.port.out.ConsultarTurmaPortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class AtualizarTurmaUseCase implements AtualizarTurmaPortIn {
@@ -33,6 +35,8 @@ public class AtualizarTurmaUseCase implements AtualizarTurmaPortIn {
         turmaDto.setDataCriacao(turmaConsultada.getDataCriacao());
         turmaDto.setDataModificacao(LocalDateTime.now());
 
+
+        log.info("Turma atualizada com sucesso: {}", turmaConsultada);
         return atualizarTurmaPortOut.atualizar(turmaDto);
 
     }

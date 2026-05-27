@@ -10,11 +10,13 @@ import br.com.olharpedagogicoia.application.port.out.AtualizarUnidadePortOut;
 import br.com.olharpedagogicoia.application.port.out.ConsultarEmpresaPortOut;
 import br.com.olharpedagogicoia.application.port.out.ConsultarUnidadePortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class AtualizarUnidadeUseCase implements AtualizarUnidadePortIn {
@@ -33,6 +35,7 @@ public class AtualizarUnidadeUseCase implements AtualizarUnidadePortIn {
         unidadeDto.setDataCriacao(unidadeConsultada.getDataCriacao());
         unidadeDto.setDataModificacao(LocalDateTime.now());
 
+        log.info("Unidade atualizada com sucesso: {}", unidadeConsultada);
         return atualizarUnidadePortOut.atualizar(unidadeDto);
 
 

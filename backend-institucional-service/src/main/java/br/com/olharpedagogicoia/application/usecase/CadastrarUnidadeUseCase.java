@@ -7,10 +7,12 @@ import br.com.olharpedagogicoia.application.port.in.CadastrarUnidadePortIn;
 import br.com.olharpedagogicoia.application.port.out.CadastrarEmpresaPortOut;
 import br.com.olharpedagogicoia.application.port.out.CadastrarUnidadePortOut;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Component
 @AllArgsConstructor
 public class CadastrarUnidadeUseCase implements CadastrarUnidadePortIn {
@@ -22,7 +24,11 @@ public class CadastrarUnidadeUseCase implements CadastrarUnidadePortIn {
 
         unidadeDto.setDataModificacao(LocalDateTime.now());
         unidadeDto.setDataCriacao(LocalDateTime.now());
-        return cadastrarUnidadePortOut.cadastrar(unidadeDto);
+
+        UnidadeDto unidadeCadastrada = cadastrarUnidadePortOut.cadastrar(unidadeDto);
+
+        log.info("Unidade cadastrada com sucesso: {}", unidadeCadastrada);
+        return unidadeCadastrada;
 
     }
 }
