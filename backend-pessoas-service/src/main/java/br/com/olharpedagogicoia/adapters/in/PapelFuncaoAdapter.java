@@ -1,49 +1,42 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.PapelFuncaoDTO;
+import br.com.olharpedagogicoia.application.exceptions.PapelFuncaoNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarPapelFuncaoPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/papel-funcao")
+@AllArgsConstructor
 public class PapelFuncaoAdapter {
 
+    private final ConsultarPapelFuncaoPortIn consultarPapelFuncaoPortIn;
+
     @GetMapping("/{id}")
-    public ResponseEntity<PapelFuncaoDTO> consultaPapelFuncao(@PathVariable Integer id) {
+    public ResponseEntity<?> consultaPapelFuncao(@PathVariable final Integer id) {
 
-        PapelFuncaoDTO papelFuncaoConsultado = new PapelFuncaoDTO();
+        log.info("Consulta de Papel Função: {}", id);
 
-        papelFuncaoConsultado.setIdPapel(1);
-        papelFuncaoConsultado.setSigla("PROFESSOR");
-        papelFuncaoConsultado.setDescricao("Professor responsável pelas aulas e diários");
-        papelFuncaoConsultado.setNivelHierarquico(4);
-        papelFuncaoConsultado.setDataCriacao(LocalDateTime.now());
-        papelFuncaoConsultado.setDataModificacao(LocalDateTime.now());
+        try {
+            final PapelFuncaoDTO papelFuncaoConsultado = consultarPapelFuncaoPortIn.consultar(id);
+            return ResponseEntity.ok(papelFuncaoConsultado);
 
-        return ResponseEntity.ok(papelFuncaoConsultado);
-    }
+        } catch (PapelFuncaoNaoEncontradoException excecao) {
 
-    @PostMapping
-    public ResponseEntity<PapelFuncaoDTO> cadastraPapelFuncao(@RequestBody PapelFuncaoDTO papelFuncaoDTO) {
+            log.error("Erro ao consultar Papel Função: {}, mensagem: {}", id, excecao.getMessage());
 
-        System.out.println("Estou cadastrando o papel/função");
-        return ResponseEntity.status(HttpStatus.CREATED).body(papelFuncaoDTO);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerPapelFuncao (@PathVariable Integer id) {
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-        System.out.println("Removendo função");
-        return ResponseEntity.noContent().build();
-
-    }
-
-    @PatchMapping()
-    public ResponseEntity<PapelFuncaoDTO> atualizaPapelFuncao (@RequestBody PapelFuncaoDTO papelFuncaoDTO) {
-
-        System.out.println("Estou atualizando a função " + papelFuncaoDTO.getIdPapel());
-        return ResponseEntity.status(HttpStatus.CREATED).body(papelFuncaoDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

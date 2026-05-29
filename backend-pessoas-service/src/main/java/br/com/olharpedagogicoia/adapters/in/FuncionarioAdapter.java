@@ -1,56 +1,42 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.FuncionarioDTO;
+import br.com.olharpedagogicoia.application.exceptions.FuncionarioNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarFuncionarioPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/funcionario")
+@AllArgsConstructor
 public class FuncionarioAdapter {
 
-    @GetMapping("/{id}/pessoa/{idPessoa}/papel/{idPapel}")
-    public ResponseEntity<FuncionarioDTO> consultaFuncionario(@PathVariable Integer id,
-                                                              @PathVariable Integer idPessoa,
-                                                              @PathVariable Integer idPapel) {
+    private final ConsultarFuncionarioPortIn consultarFuncionarioPortIn;
 
-        FuncionarioDTO funcionarioConsultado = new FuncionarioDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaFuncionario(@PathVariable final Integer id) {
 
-        funcionarioConsultado.setIdFuncionario(id);
-        funcionarioConsultado.setIdPessoa(idPessoa);
-        funcionarioConsultado.setIdPapel(idPapel);
-        funcionarioConsultado.setNomeUsuario("joao");
-        funcionarioConsultado.setSenha("123456");
-        funcionarioConsultado.setUltimoLogin(LocalDateTime.now());
-        funcionarioConsultado.setAtivo(true);
-        funcionarioConsultado.setDataCriacao(LocalDateTime.now());
-        funcionarioConsultado.setDataModificacao(LocalDateTime.now());
+        log.info("Consulta de Funcionário: {}", id);
 
-        return ResponseEntity.ok(funcionarioConsultado);
-    }
+        try {
+            final FuncionarioDTO funcionarioConsultado = consultarFuncionarioPortIn.consultar(id);
+            return ResponseEntity.ok(funcionarioConsultado);
 
-    @PostMapping
-    public ResponseEntity<FuncionarioDTO> cadastraFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
+        } catch (FuncionarioNaoEncontradoException excecao) {
 
-        System.out.println("Estou cadastrando o funcionário");
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioDTO);
-    }
-    @DeleteMapping("/{id}/pessoa/{idPessoa}/papel/{idPapel}")
-    public ResponseEntity<Void> removerFuncionario (@PathVariable Integer id,
-                                                    @PathVariable Integer idPessoa,
-                                                    @PathVariable Integer idPapel) {
+            log.error("Erro ao consultar Funcionário: {}, mensagem: {}", id, excecao.getMessage());
 
-        System.out.println("Removendo Funcionario");
-        return ResponseEntity.noContent().build();
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    }
-
-    @PatchMapping()
-    public ResponseEntity<FuncionarioDTO> atualizaFuncionario (@RequestBody FuncionarioDTO funcionarioDTO) {
-
-        System.out.println("Estou atualizando o funcionario " + funcionarioDTO.getIdFuncionario());
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

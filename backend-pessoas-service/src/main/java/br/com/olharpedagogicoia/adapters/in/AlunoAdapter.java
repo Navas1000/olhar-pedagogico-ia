@@ -1,50 +1,42 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.AlunoDTO;
+import br.com.olharpedagogicoia.application.exceptions.AlunoNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarAlunoPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/aluno")
+@AllArgsConstructor
 public class AlunoAdapter {
 
- @GetMapping("/{id}/pessoa/{idPessoa}")
+    private final ConsultarAlunoPortIn consultarAlunoPortIn;
 
-    public ResponseEntity<AlunoDTO> consultaAluno(@PathVariable Integer id, @PathVariable Integer idPessoa) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaAluno(@PathVariable final Integer id) {
 
-        AlunoDTO alunoConsultado = new AlunoDTO();
+        log.info("Consulta de Aluno: {}", id);
 
-        alunoConsultado.setIdAluno(id);
-        alunoConsultado.setIdPessoa(idPessoa);
-        alunoConsultado.setNomeChamada("Joãozinho");
-        alunoConsultado.setDataCriacao(LocalDateTime.now());
-        alunoConsultado.setDataModificacao(LocalDateTime.now());
+        try {
+            final AlunoDTO alunoConsultado = consultarAlunoPortIn.consultar(id);
+            return ResponseEntity.ok(alunoConsultado);
 
-        return ResponseEntity.ok(alunoConsultado);
-    }
+        } catch (AlunoNaoEncontradoException excecao) {
 
-    @PostMapping
-    public ResponseEntity<AlunoDTO> cadastraAluno(@RequestBody AlunoDTO alunoDTO) {
+            log.error("Erro ao consultar Aluno: {}, mensagem: {}", id, excecao.getMessage());
 
-        System.out.println("Estou cadastrando o aluno");
-        return ResponseEntity.status(HttpStatus.CREATED).body(alunoDTO);
-    }
-    @DeleteMapping("/{id}/pessoa/{idPessoa}")
-    public ResponseEntity<Void> removerAluno (@PathVariable Integer id,
-                                              @PathVariable Integer idPessoa) {
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-        System.out.println("Removendo Aluno");
-        return ResponseEntity.noContent().build();
-
-    }
-
-    @PatchMapping()
-    public ResponseEntity<AlunoDTO> atualizaAluno (@RequestBody AlunoDTO alunoDTO) {
-
-        System.out.println("Estou atualizando o aluno " + alunoDTO.getIdAluno());
-        return ResponseEntity.status(HttpStatus.CREATED).body(alunoDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

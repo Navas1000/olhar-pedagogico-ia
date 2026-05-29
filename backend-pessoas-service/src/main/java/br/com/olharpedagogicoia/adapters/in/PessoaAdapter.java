@@ -1,52 +1,42 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.PessoaDTO;
+import br.com.olharpedagogicoia.application.exceptions.PessoaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarPessoaPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/pessoa")
+@AllArgsConstructor
 public class PessoaAdapter {
 
+    private final ConsultarPessoaPortIn consultarPessoaPortIn;
+
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaDTO> consultaPessoa(@PathVariable Integer id) {
+    public ResponseEntity<?> consultaPessoa(@PathVariable final Integer id) {
 
-        PessoaDTO pessoaConsultada = new PessoaDTO();
+        log.info("Consulta de Pessoa: {}", id);
 
-        pessoaConsultada.setIdPessoa(1);
-        pessoaConsultada.setNome("João da Silva");
-        pessoaConsultada.setCpf("12345678901");
-        pessoaConsultada.setDataNascimento(LocalDate.of(2010, 5, 20));
-        pessoaConsultada.setEmail("joao@email.com");
-        pessoaConsultada.setTelefone("19988887777");
-        pessoaConsultada.setDataCriacao(LocalDateTime.now());
-        pessoaConsultada.setDataModificacao(LocalDateTime.now());
+        try {
+            final PessoaDTO pessoaConsultada = consultarPessoaPortIn.consultar(id);
+            return ResponseEntity.ok(pessoaConsultada);
 
-        return ResponseEntity.ok(pessoaConsultada);
-    }
+        } catch (PessoaNaoEncontradaException excecao) {
 
-    @PostMapping
-    public ResponseEntity<PessoaDTO> cadastraPessoa(@RequestBody PessoaDTO pessoaDTO) {
+            log.error("Erro ao consultar Pessoa: {}, mensagem: {}", id, excecao.getMessage());
 
-        System.out.println("Estou cadastrando a pessoa");
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaDTO);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removerPessoa (@PathVariable Integer id) {
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-        System.out.println("Removendo Pessoa");
-        return ResponseEntity.noContent().build();
-
-    }
-
-    @PatchMapping()
-    public ResponseEntity<PessoaDTO> atualizaPessoa (@RequestBody PessoaDTO pessoaDTO) {
-
-        System.out.println("Estou atualizando a pessoa " + pessoaDTO.getIdPessoa());
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }
