@@ -1,0 +1,11 @@
+{
+  "id_funcionario": 1,
+  "id_pessoa": 3,
+  "id_papel": 4,
+  "nome_usuario": "luana.alterada",
+  "senha": "luana1234",
+  "ultimo_login": null,
+  "ativo": false,
+  "data_criacao": "2026-05-29T13:36:13",
+  "data_modificacao": "2026-05-29T14:00:00"
+}

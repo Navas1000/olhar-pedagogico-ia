@@ -4,6 +4,8 @@ services:
     build:
       context: ../../backend-institucional-service
       dockerfile: Dockerfile
+    profiles:
+      - aplicacao
     container_name: backend-institucional-service
     restart: unless-stopped
     depends_on:
@@ -22,6 +24,8 @@ services:
     build:
       context: ../../backend-pessoas-service
       dockerfile: Dockerfile
+    profiles:
+      - aplicacao
     container_name: backend-pessoas-service
     restart: unless-stopped
     depends_on:
@@ -38,6 +42,8 @@ services:
 
   mysql:
     image: mysql:8.4.8
+    profiles:
+      - infraestrutura
     container_name: platform-core-db-mysql
     restart: unless-stopped
 
