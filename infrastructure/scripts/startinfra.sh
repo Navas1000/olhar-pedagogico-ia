@@ -1,7 +1,7 @@
 #!/bin/sh
 cd ..
 cd docker
-docker compose --profile infraestrutura docker-compose.yml up -d --wait
+docker compose -f docker-compose.yml up -d --wait --profile infraestrutura
 echo "Os containers estão rodando"
 cd ..
 cd scripts
