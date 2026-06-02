@@ -45,6 +45,7 @@ services:
     container_name: vault
     profiles:
       - aplicacao
+      - infraestrutura
     ports:
       - "8200:8200"
     volumes:
