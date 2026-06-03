@@ -1,56 +1,102 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.AulaDTO;
+import br.com.olharpedagogicoia.application.exceptions.AulaNaoEncontradaException;
+import br.com.olharpedagogicoia.application.exceptions.IdAulaObrigatorioException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarAulaPortIn;
+import br.com.olharpedagogicoia.application.port.in.CadastrarAulaPortIn;
+import br.com.olharpedagogicoia.application.port.in.ConsultarAulaPortIn;
+import br.com.olharpedagogicoia.application.port.in.RemoverAulaPortIn;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/aula")
+@AllArgsConstructor
 public class AulaAdapter {
 
+    private final CadastrarAulaPortIn cadastrarAulaPortIn;
+    private final ConsultarAulaPortIn consultarAulaPortIn;
+    private final RemoverAulaPortIn removerAulaPortIn;
+    private final AtualizarAulaPortIn atualizarAulaPortIn;
+
     @GetMapping("/{id}")
-    public ResponseEntity<AulaDTO> consultaAula(@PathVariable Integer id) {
+    public ResponseEntity<?> consultaAula(@PathVariable final Integer id) {
 
-        AulaDTO aulaConsultada = new AulaDTO();
+        log.info("Consulta de Aula: {}", id);
 
-        aulaConsultada.setIdAula(1);
-        aulaConsultada.setIdEmpresa(1);
-        aulaConsultada.setIdUnidade(1);
-        aulaConsultada.setIdTurma(1);
-        aulaConsultada.setIdPessoa(1);
-        aulaConsultada.setIdFuncionario(1);
-        aulaConsultada.setDataHoraAula(LocalDateTime.now());
-        aulaConsultada.setDataCriacao(LocalDateTime.now());
+        try {
+            final AulaDTO aulaConsultada = consultarAulaPortIn.consultar(id);
+            return ResponseEntity.ok(aulaConsultada);
 
-        return ResponseEntity.ok(aulaConsultada);
+        } catch (AulaNaoEncontradaException excecao) {
+
+            log.error("Erro ao consultar Aula: {}, mensagem: {}", id, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<AulaDTO> cadastraAula(@RequestBody AulaDTO aulaDTO) {
+    public ResponseEntity<AulaDTO> cadastraAula(@RequestBody @Valid AulaDTO aulaDTO) {
 
-        System.out.println("Estou cadastrando a aula");
-        return ResponseEntity.status(HttpStatus.CREATED).body(aulaDTO);
-    }
-    @DeleteMapping("/{id}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<Void> removerAula (@PathVariable Integer id,
-                                             @PathVariable Integer idEmpresa,
-                                             @PathVariable Integer idUnidade,
-                                             @PathVariable Integer idTurma,
-                                             @PathVariable Integer idPessoa,
-                                             @PathVariable Integer idFuncionario) {
+        log.info("Cadastro da Aula: {}", aulaDTO);
 
-        System.out.println("Removendo Aula");
-        return ResponseEntity.noContent().build();
+        final AulaDTO aulaCadastrada = cadastrarAulaPortIn.cadastrar(aulaDTO);
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(aulaCadastrada);
     }
 
-    @PatchMapping()
-    public ResponseEntity<AulaDTO> atualizaAula (@RequestBody AulaDTO aulaDTO) {
+    @DeleteMapping("/{idAula}")
+    public ResponseEntity<?> removerAula(@PathVariable Integer idAula) {
 
-        System.out.println("Estou atualizando a aula " + aulaDTO.getIdAula());
-        return ResponseEntity.status(HttpStatus.CREATED).body(aulaDTO);
+        log.info("Remover Aula: {}", idAula);
+
+        try {
+            removerAulaPortIn.remover(idAula);
+
+        } catch (AulaNaoEncontradaException excecao) {
+
+            log.error("Erro ao deletar Aula: {}, mensagem: {}", idAula, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaAula(@RequestBody @Valid AulaDTO aulaDTO) {
+
+        log.info("Atualizar Aula: {}", aulaDTO);
+
+        try {
+            final AulaDTO aulaAtualizada = atualizarAulaPortIn.atualizar(aulaDTO);
+
+            return ResponseEntity.ok(aulaAtualizada);
+
+        } catch (AulaNaoEncontradaException | IdAulaObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Aula: {}, mensagem: {}", aulaDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

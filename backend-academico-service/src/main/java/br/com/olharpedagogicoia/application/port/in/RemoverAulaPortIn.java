@@ -1,0 +1,9 @@
+package br.com.olharpedagogicoia.application.port.in;
+
+import br.com.olharpedagogicoia.application.exceptions.AulaNaoEncontradaException;
+
+public interface RemoverAulaPortIn {
+
+    public void remover(final Integer id) throws AulaNaoEncontradaException;
+
+}
