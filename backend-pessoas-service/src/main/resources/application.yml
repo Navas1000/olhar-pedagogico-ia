@@ -1,8 +1,22 @@
 spring:
+  config:
+    import: "vault://" # Ativa a integração
+  cloud:
+    vault:
+      uri: http://127.0.0.1:8200
+      authentication: APPROLE
+      app-role:
+        role-id: 9063fa80-41d0-0f6e-e92f-8252f2e8d250
+        secret-id: a88f4569-ef24-f702-e86a-55403db9c74d
+      kv:
+        enabled: true
+        backend: secret
+        default-context: backend-pessoas-service
+
   datasource:
-    url: jdbc:mysql://mysql:3306/olhar-pedagogico-db
+    url: jdbc:mysql://localhost:3306/olhar-pedagogico-db
     username: mateus
-    password: Mateus@2026!#
+    password: ${db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
