@@ -1,69 +1,43 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.DiarioAudioDTO;
+import br.com.olharpedagogicoia.application.exceptions.DiarioAudioNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarDiarioAudioPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/diario-audio")
+@AllArgsConstructor
 public class DiarioAudioAdapter {
 
-    @GetMapping("diario/{idDiario}/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<DiarioAudioDTO> consultaDiarioAudio(@PathVariable Integer idDiario,
-                                                              @PathVariable Integer idAula,
-                                                              @PathVariable Integer idEmpresa,
-                                                              @PathVariable Integer idUnidade,
-                                                              @PathVariable Integer idTurma,
-                                                              @PathVariable Integer idPessoa,
-                                                              @PathVariable Integer idFuncionario) {
+    private final ConsultarDiarioAudioPortIn consultarDiarioAudioPortIn;
 
-        DiarioAudioDTO diarioAudioConsultado = new DiarioAudioDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaDiarioAudio(@PathVariable final Integer id) {
 
-        diarioAudioConsultado.setIdDiario(idDiario);
-        diarioAudioConsultado.setIdAula(idAula);
-        diarioAudioConsultado.setIdEmpresa(idEmpresa);
-        diarioAudioConsultado.setIdUnidade(idUnidade);
-        diarioAudioConsultado.setIdTurma(idTurma);
-        diarioAudioConsultado.setIdPessoa(idPessoa);
-        diarioAudioConsultado.setIdFuncionario(idFuncionario);
-        diarioAudioConsultado.setNomeBucket("olhar-pedagogico-audios");
-        diarioAudioConsultado.setChaveObjeto("Chave");
-        diarioAudioConsultado.setTamanhoArquivo(1024L);
-        diarioAudioConsultado.setExtensao("mp3");
-        diarioAudioConsultado.setDuracaoSegundos(60);
-        diarioAudioConsultado.setChecksum("checksum");
-        diarioAudioConsultado.setDataCriacao(LocalDateTime.now());
+        log.info("Consulta de Diário Áudio: {}", id);
 
-        return ResponseEntity.ok(diarioAudioConsultado);
-    }
+        try {
+            final DiarioAudioDTO diarioAudioConsultado = consultarDiarioAudioPortIn.consultar(id);
 
-    @PostMapping
-    public ResponseEntity<DiarioAudioDTO> cadastraDiarioAudio(@RequestBody DiarioAudioDTO diarioAudioDTO) {
+            return ResponseEntity.ok(diarioAudioConsultado);
 
-        System.out.println("Estou cadastrando o áudio do diário");
-        return ResponseEntity.status(HttpStatus.CREATED).body(diarioAudioDTO);
-    }
-    @DeleteMapping("diario/{idDiario}/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<Void> removerDiarioAudio (@PathVariable Integer idDiario,
-                                                    @PathVariable Integer idAula,
-                                                    @PathVariable Integer idEmpresa,
-                                                    @PathVariable Integer idUnidade,
-                                                    @PathVariable Integer idTurma,
-                                                    @PathVariable Integer idPessoa,
-                                                    @PathVariable Integer idFuncionario) {
+        } catch (DiarioAudioNaoEncontradoException excecao) {
 
-        System.out.println("Removendo audio do diário");
-        return ResponseEntity.noContent().build();
+            log.error("Erro ao consultar Diário Áudio: {}, mensagem: {}", id, excecao.getMessage());
 
-    }
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<DiarioAudioDTO> atualizaDiarioAudio (@RequestBody DiarioAudioDTO diarioAudioDTO) {
-
-        System.out.println("Estou atualizando o audio do diário " + diarioAudioDTO.getIdAudio());
-        return ResponseEntity.status(HttpStatus.CREATED).body(diarioAudioDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

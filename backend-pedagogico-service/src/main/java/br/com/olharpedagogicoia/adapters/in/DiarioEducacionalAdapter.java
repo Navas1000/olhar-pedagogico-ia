@@ -1,62 +1,44 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.DiarioEducacionalDTO;
-import br.com.olharpedagogicoia.application.dto.StatusProcessamento;
+import br.com.olharpedagogicoia.application.exceptions.DiarioEducacionalNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarDiarioEducacionalPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/diario-educacional")
+@AllArgsConstructor
 public class DiarioEducacionalAdapter {
 
-    @GetMapping("/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<DiarioEducacionalDTO> consultaDiarioEducacional(@PathVariable Integer idAula,
-                                                                          @PathVariable Integer idEmpresa,
-                                                                          @PathVariable Integer idUnidade,
-                                                                          @PathVariable Integer idTurma,
-                                                                          @PathVariable Integer idPessoa,
-                                                                          @PathVariable Integer idFuncionario) {
+    private final ConsultarDiarioEducacionalPortIn consultarDiarioEducacionalPortIn;
 
-        DiarioEducacionalDTO diarioConsultado = new DiarioEducacionalDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaDiarioEducacional(@PathVariable final Integer id) {
 
-        diarioConsultado.setIdAula(idAula);
-        diarioConsultado.setIdEmpresa(idEmpresa);
-        diarioConsultado.setIdUnidade(idUnidade);
-        diarioConsultado.setIdTurma(idTurma);
-        diarioConsultado.setIdPessoa(idPessoa);
-        diarioConsultado.setIdFuncionario(idFuncionario);
-        diarioConsultado.setStatusProcessamento(StatusProcessamento.PROCESSADO);
-        diarioConsultado.setDataCriacao(LocalDateTime.now());
+        log.info("Consulta de Diário Educacional: {}", id);
 
-        return ResponseEntity.ok(diarioConsultado);
-    }
+        try {
+            final DiarioEducacionalDTO diarioEducacionalConsultado =
+                    consultarDiarioEducacionalPortIn.consultar(id);
 
-    @PostMapping
-    public ResponseEntity<DiarioEducacionalDTO> cadastraDiarioEducacional(@RequestBody DiarioEducacionalDTO diarioEducacionalDTO) {
+            return ResponseEntity.ok(diarioEducacionalConsultado);
 
-        System.out.println("Estou cadastrando o diário educacional");
-        return ResponseEntity.status(HttpStatus.CREATED).body(diarioEducacionalDTO);
-    }
-    @DeleteMapping("/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<Void> removerDiarioEducacional (@PathVariable Integer idAula,
-                                                          @PathVariable Integer idEmpresa,
-                                                          @PathVariable Integer idUnidade,
-                                                          @PathVariable Integer idTurma,
-                                                          @PathVariable Integer idPessoa,
-                                                          @PathVariable Integer idFuncionario) {
+        } catch (DiarioEducacionalNaoEncontradoException excecao) {
 
-        System.out.println("Removendo o diario educacional");
-        return ResponseEntity.noContent().build();
+            log.error("Erro ao consultar Diário Educacional: {}, mensagem: {}", id, excecao.getMessage());
 
-    }
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    @PatchMapping()
-    public ResponseEntity<DiarioEducacionalDTO> atualizaDiarioEducacional (@RequestBody DiarioEducacionalDTO diarioEducacionalDTO) {
-
-        System.out.println("Estou atualizando o diário educacional " + diarioEducacionalDTO.getIdDiario());
-        return ResponseEntity.status(HttpStatus.CREATED).body(diarioEducacionalDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

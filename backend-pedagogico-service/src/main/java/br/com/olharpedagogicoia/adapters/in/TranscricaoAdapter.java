@@ -1,68 +1,43 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.TranscricaoDTO;
+import br.com.olharpedagogicoia.application.exceptions.TranscricaoNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarTranscricaoPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/transcricao")
+@AllArgsConstructor
 public class TranscricaoAdapter {
 
-    @GetMapping("/audio/{idAudio}/aula/{idAula}/diario/{idDiario}/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<TranscricaoDTO> consultaTranscricao(@PathVariable Integer idAudio,
-                                                              @PathVariable Integer idDiario,
-                                                              @PathVariable Integer idAula,
-                                                              @PathVariable Integer idEmpresa,
-                                                              @PathVariable Integer idUnidade,
-                                                              @PathVariable Integer idTurma,
-                                                              @PathVariable Integer idPessoa,
-                                                              @PathVariable Integer idFuncionario) {
+    private final ConsultarTranscricaoPortIn consultarTranscricaoPortIn;
 
-        TranscricaoDTO transcricaoConsultada = new TranscricaoDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaTranscricao(@PathVariable final Integer id) {
 
-        transcricaoConsultada.setIdAudio(idAudio);
-        transcricaoConsultada.setIdDiario(idDiario);
-        transcricaoConsultada.setIdAula(idAula);
-        transcricaoConsultada.setIdEmpresa(idEmpresa);
-        transcricaoConsultada.setIdUnidade(idUnidade);
-        transcricaoConsultada.setIdTurma(idTurma);
-        transcricaoConsultada.setIdPessoa(idPessoa);
-        transcricaoConsultada.setIdFuncionario(idFuncionario);
-        transcricaoConsultada.setTranscricao("Texto da transcrição da aula.");
-        transcricaoConsultada.setTranscricaoJson("Transcricao");
-        transcricaoConsultada.setDataCriacao(LocalDateTime.now());
+        log.info("Consulta de Transcrição: {}", id);
 
-        return ResponseEntity.ok(transcricaoConsultada);
-    }
+        try {
+            final TranscricaoDTO transcricaoConsultada = consultarTranscricaoPortIn.consultar(id);
 
-    @PostMapping
-    public ResponseEntity<TranscricaoDTO> cadastraTranscricao(@RequestBody TranscricaoDTO transcricaoDTO) {
+            return ResponseEntity.ok(transcricaoConsultada);
 
-        System.out.println("Estou cadastrando a transcrição");
-        return ResponseEntity.status(HttpStatus.CREATED).body(transcricaoDTO);
-    }
-    @DeleteMapping("/audio/{idAudio}/aula/{idAula}/diario/{idDiario}/aula/{idAula}/empresa/{idEmpresa}/unidade/{idUnidade}/turma/{idTurma}/pessoa/{idPessoa}/funcionario/{idFuncionario}")
-    public ResponseEntity<Void> removerTranscricao (@PathVariable Integer idAudio,
-                                                    @PathVariable Integer idDiario,
-                                                    @PathVariable Integer idAula,
-                                                    @PathVariable Integer idEmpresa,
-                                                    @PathVariable Integer idUnidade,
-                                                    @PathVariable Integer idTurma,
-                                                    @PathVariable Integer idPessoa,
-                                                    @PathVariable Integer idFuncionario) {
+        } catch (TranscricaoNaoEncontradaException excecao) {
 
-        System.out.println("Removendo Transcricao");
-        return ResponseEntity.noContent().build();
+            log.error("Erro ao consultar Transcrição: {}, mensagem: {}", id, excecao.getMessage());
 
-    }
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<TranscricaoDTO> atualizaTranscricao (@PathVariable Integer id, @RequestBody TranscricaoDTO transcricaoDTO) {
-
-        System.out.println("Estou atualizando a transcricao " + transcricaoDTO.getTranscricao());
-        return ResponseEntity.status(HttpStatus.CREATED).body(transcricaoDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

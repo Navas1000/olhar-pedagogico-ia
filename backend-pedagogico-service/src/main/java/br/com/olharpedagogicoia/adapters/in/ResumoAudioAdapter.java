@@ -1,50 +1,43 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.ResumoAudioDTO;
+import br.com.olharpedagogicoia.application.exceptions.ResumoAudioNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarResumoAudioPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/resumo-audio")
+@AllArgsConstructor
 public class ResumoAudioAdapter {
 
-    @GetMapping("/resumo/{idResumo}")
-    public ResponseEntity<ResumoAudioDTO> consultaResumoAudio(@PathVariable Integer idResumo) {
+    private final ConsultarResumoAudioPortIn consultarResumoAudioPortIn;
 
-        ResumoAudioDTO resumoAudioConsultado = new ResumoAudioDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaResumoAudio(@PathVariable final Integer id) {
 
-        resumoAudioConsultado.setIdResumo(idResumo);
-        resumoAudioConsultado.setNomeBucket("olhar-pedagogico-resumos");
-        resumoAudioConsultado.setChaveObjeto("Chave");
-        resumoAudioConsultado.setDuracaoSegundos(60);
-        resumoAudioConsultado.setFormato("mp3");
-        resumoAudioConsultado.setTamanhoBytes(1024L);
-        resumoAudioConsultado.setDataCriacao(LocalDateTime.now());
+        log.info("Consulta de Resumo Áudio: {}", id);
 
-        return ResponseEntity.ok(resumoAudioConsultado);
-    }
+        try {
+            final ResumoAudioDTO resumoAudioConsultado = consultarResumoAudioPortIn.consultar(id);
 
-    @PostMapping
-    public ResponseEntity<ResumoAudioDTO> cadastraResumoAudio(@RequestBody ResumoAudioDTO resumoAudioDTO) {
+            return ResponseEntity.ok(resumoAudioConsultado);
 
-        System.out.println("Estou cadastrando o áudio do resumo");
-        return ResponseEntity.status(HttpStatus.CREATED).body(resumoAudioDTO);
-    }
-    @DeleteMapping("/resumo/{idResumo}")
-    public ResponseEntity<Void> removerResumoAudio (@PathVariable Integer idResumo) {
+        } catch (ResumoAudioNaoEncontradoException excecao) {
 
-        System.out.println("Removendo o resumo do audio");
-        return ResponseEntity.noContent().build();
+            log.error("Erro ao consultar Resumo Áudio: {}, mensagem: {}", id, excecao.getMessage());
 
-    }
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    @PatchMapping()
-    public ResponseEntity<ResumoAudioDTO> atualizaResumoAudio (@RequestBody ResumoAudioDTO resumoAudioDTO) {
-
-        System.out.println("Estou atualizando o resumo do audio " + resumoAudioDTO.getIdResumo());
-        return ResponseEntity.status(HttpStatus.CREATED).body(resumoAudioDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

@@ -1,81 +1,44 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.ResumoEducacionalDTO;
-import br.com.olharpedagogicoia.application.dto.TipoResumo;
+import br.com.olharpedagogicoia.application.exceptions.ResumoEducacionalNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.ConsultarResumoEducacionalPortIn;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/resumo-educacional")
+@AllArgsConstructor
 public class ResumoEducacionalAdapter {
 
-    @GetMapping("/turma/{idTurma}/empresaTurma/{idEmpresaTurma}/unidadeTurma/{idUnidadeTurma}/aula/{idAula}/empresaAula/{idEmpresaAula}/unidadeAula/{idUnidadeAula}/turmaAula/{idTurmaAula}" +
-            "/pessoaAula/{idPessoaAula}/funcionarioAula/{idFuncionarioAula}/aluno/{idAluno}/pessoaAluno/{idPessoaAluno}")
-    public ResponseEntity<ResumoEducacionalDTO> consultaResumoEducacional(@PathVariable Integer idTurma,
-                                                                          @PathVariable Integer idEmpresaTurma,
-                                                                          @PathVariable Integer idUnidadeTurma,
-                                                                          @PathVariable Integer idAula,
-                                                                          @PathVariable Integer idEmpresaAula,
-                                                                          @PathVariable Integer idUnidadeAula,
-                                                                          @PathVariable Integer idTurmaAula,
-                                                                          @PathVariable Integer idPessoaAula,
-                                                                          @PathVariable Integer idFuncionarioAula,
-                                                                          @PathVariable Integer idAluno,
-                                                                          @PathVariable Integer idPessoaAluno) {
+    private final ConsultarResumoEducacionalPortIn consultarResumoEducacionalPortIn;
 
-        ResumoEducacionalDTO resumoConsultado = new ResumoEducacionalDTO();
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultaResumoEducacional(@PathVariable final Integer id) {
 
-        resumoConsultado.setIdTurma(idTurma);
-        resumoConsultado.setIdEmpresaTurma(idEmpresaTurma);
-        resumoConsultado.setIdUnidadeTurma(idUnidadeTurma);
-        resumoConsultado.setIdAula(idAula);
-        resumoConsultado.setIdEmpresaAula(idEmpresaAula);
-        resumoConsultado.setIdUnidadeAula(idUnidadeAula);
-        resumoConsultado.setIdTurmaAula(idTurmaAula);
-        resumoConsultado.setIdPessoaAula(idPessoaAula);
-        resumoConsultado.setIdFuncionarioAula(idFuncionarioAula);
-        resumoConsultado.setIdAluno(idAluno);
-        resumoConsultado.setIdPessoaAluno(idPessoaAluno);
-        resumoConsultado.setTipoResumo(TipoResumo.AULA);
-        resumoConsultado.setDataInicio(LocalDateTime.now());
-        resumoConsultado.setDataFim(LocalDateTime.now());
-        resumoConsultado.setResumoTexto("Resumo pedagógico da aula");
-        resumoConsultado.setDataCriacao(LocalDateTime.now());
+        log.info("Consulta de Resumo Educacional: {}", id);
 
-        return ResponseEntity.ok(resumoConsultado);
-    }
+        try {
+            final ResumoEducacionalDTO resumoEducacionalConsultado =
+                    consultarResumoEducacionalPortIn.consultar(id);
 
-    @PostMapping
-    public ResponseEntity<ResumoEducacionalDTO> cadastraResumoEducacional(@RequestBody ResumoEducacionalDTO resumoEducacionalDTO) {
+            return ResponseEntity.ok(resumoEducacionalConsultado);
 
-        System.out.println("Estou cadastrando o resumo educacional");
-        return ResponseEntity.status(HttpStatus.CREATED).body(resumoEducacionalDTO);
-    }
-    @DeleteMapping("/turma/{idTurma}/empresaTurma/{idEmpresaTurma}/unidadeTurma/{idUnidadeTurma}/aula/{idAula}/empresaAula/{idEmpresaAula}/unidadeAula/{idUnidadeAula}/turmaAula/{idTurmaAula}\" +\n" +
-            "/pessoaAula/{idPessoaAula}/funcionarioAula/{idFuncionarioAula}/aluno/{idAluno}/pessoaAluno/{idPessoaAluno}")
-    public ResponseEntity<Void> removerResumoEducacional (@PathVariable Integer idTurma,
-                                                          @PathVariable Integer idEmpresaTurma,
-                                                          @PathVariable Integer idUnidadeTurma,
-                                                          @PathVariable Integer idAula,
-                                                          @PathVariable Integer idEmpresaAula,
-                                                          @PathVariable Integer idUnidadeAula,
-                                                          @PathVariable Integer idTurmaAula,
-                                                          @PathVariable Integer idPessoaAula,
-                                                          @PathVariable Integer idFuncionarioAula,
-                                                          @PathVariable Integer idAluno,
-                                                          @PathVariable Integer idPessoaAluno) {
+        } catch (ResumoEducacionalNaoEncontradoException excecao) {
 
-        System.out.println("Removendo o resumo educacional");
-        return ResponseEntity.noContent().build();
+            log.error("Erro ao consultar Resumo Educacional: {}, mensagem: {}", id, excecao.getMessage());
 
-    }
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
 
-    @PatchMapping()
-    public ResponseEntity<ResumoEducacionalDTO> atualizaResumoEducacional (@RequestBody ResumoEducacionalDTO resumoEducacionalDTO) {
-        System.out.println("Estou atualizando o resumo educacional " + resumoEducacionalDTO.getResumoTexto());
-        return ResponseEntity.status(HttpStatus.CREATED).body(resumoEducacionalDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }
