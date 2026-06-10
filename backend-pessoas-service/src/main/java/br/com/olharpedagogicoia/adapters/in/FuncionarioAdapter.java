@@ -7,6 +7,7 @@ import br.com.olharpedagogicoia.application.port.in.AtualizarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverFuncionarioPortIn;
+import br.com.olharpedagogicoia.application.port.in.ValidarFuncionarioPortIn;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class FuncionarioAdapter {
     private final ConsultarFuncionarioPortIn consultarFuncionarioPortIn;
     private final RemoverFuncionarioPortIn removerFuncionarioPortIn;
     private final AtualizarFuncionarioPortIn atualizarFuncionarioPortIn;
+    private final ValidarFuncionarioPortIn validarFuncionarioPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaFuncionario(@PathVariable final Integer id) {
@@ -56,6 +58,27 @@ public class FuncionarioAdapter {
         final FuncionarioDTO funcionarioCadastrado = cadastrarFuncionarioPortIn.cadastrar(funcionarioDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioCadastrado);
+    }
+
+    @PostMapping("/validar")
+    public ResponseEntity<?> validarFuncionario(@RequestBody @Valid FuncionarioDTO funcionarioDTO) {
+
+        log.info("Validação de Funcionário: {}", funcionarioDTO.getNomeUsuario());
+
+        try {
+            final FuncionarioDTO funcionarioValidado = validarFuncionarioPortIn.validar(funcionarioDTO);
+
+            return ResponseEntity.ok(funcionarioValidado);
+
+        } catch (FuncionarioNaoEncontradoException excecao) {
+
+            log.error("Erro ao validar Funcionário: {}, mensagem: {}", funcionarioDTO.getNomeUsuario(), excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 
     @DeleteMapping("/{idFuncionario}")

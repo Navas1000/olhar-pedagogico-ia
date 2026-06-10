@@ -7,6 +7,7 @@ import br.com.olharpedagogicoia.application.port.in.AtualizarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverFuncionarioPortIn;
+import br.com.olharpedagogicoia.application.port.in.ValidarFuncionarioPortIn;
 import br.com.olharpedagogicoia.application.stub.FuncionarioStub;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,9 @@ public class FuncionarioAdapterTest {
     @Mock
     private AtualizarFuncionarioPortIn atualizarFuncionarioPortIn;
 
+    @Mock
+    private ValidarFuncionarioPortIn validarFuncionarioPortIn;
+
     @InjectMocks
     private FuncionarioAdapter funcionarioAdapter;
 
@@ -56,7 +60,8 @@ public class FuncionarioAdapterTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioNaConsulta() throws FuncionarioNaoEncontradoException {
+    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioNaConsulta()
+            throws FuncionarioNaoEncontradoException {
 
         when(consultarFuncionarioPortIn.consultar(anyInt()))
                 .thenThrow(FuncionarioNaoEncontradoException.class);
@@ -74,15 +79,56 @@ public class FuncionarioAdapterTest {
 
         final FuncionarioDTO funcionarioCadastrado = FuncionarioStub.getFuncionarioCompleta();
 
-        when(cadastrarFuncionarioPortIn.cadastrar(any(FuncionarioDTO.class))).thenReturn(funcionarioCadastrado);
+        when(cadastrarFuncionarioPortIn.cadastrar(any(FuncionarioDTO.class)))
+                .thenReturn(funcionarioCadastrado);
 
-        final ResponseEntity<FuncionarioDTO> resposta = funcionarioAdapter.cadastraFuncionario(funcionarioCadastrado);
+        final ResponseEntity<FuncionarioDTO> resposta =
+                funcionarioAdapter.cadastraFuncionario(funcionarioCadastrado);
 
         assertNotNull(resposta);
         assertEquals(HttpStatusCode.valueOf(201), resposta.getStatusCode());
         assertEquals(funcionarioCadastrado, resposta.getBody());
 
         verify(cadastrarFuncionarioPortIn).cadastrar(funcionarioCadastrado);
+    }
+
+    @Test
+    void deveValidarFuncionarioComSucesso() throws FuncionarioNaoEncontradoException {
+
+        final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
+
+        final FuncionarioDTO funcionarioValidado = FuncionarioStub.getFuncionarioCompleta();
+        funcionarioValidado.setSenha(null);
+
+        when(validarFuncionarioPortIn.validar(any(FuncionarioDTO.class)))
+                .thenReturn(funcionarioValidado);
+
+        final ResponseEntity<?> resposta =
+                funcionarioAdapter.validarFuncionario(funcionarioDTO);
+
+        assertNotNull(resposta);
+        assertEquals(HttpStatusCode.valueOf(200), resposta.getStatusCode());
+        assertEquals(funcionarioValidado, resposta.getBody());
+
+        verify(validarFuncionarioPortIn).validar(funcionarioDTO);
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoNaoValidarFuncionario()
+            throws FuncionarioNaoEncontradoException {
+
+        final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
+
+        when(validarFuncionarioPortIn.validar(any(FuncionarioDTO.class)))
+                .thenThrow(FuncionarioNaoEncontradoException.class);
+
+        final ResponseEntity<?> erro =
+                funcionarioAdapter.validarFuncionario(funcionarioDTO);
+
+        assertNotNull(erro);
+        assertEquals(HttpStatusCode.valueOf(404), erro.getStatusCode());
+
+        verify(validarFuncionarioPortIn).validar(funcionarioDTO);
     }
 
     @Test
@@ -97,7 +143,8 @@ public class FuncionarioAdapterTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioParaRemover() throws FuncionarioNaoEncontradoException {
+    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioParaRemover()
+            throws FuncionarioNaoEncontradoException {
 
         doThrow(FuncionarioNaoEncontradoException.class)
                 .when(removerFuncionarioPortIn).remover(1);
@@ -111,13 +158,16 @@ public class FuncionarioAdapterTest {
     }
 
     @Test
-    void deveAtualizarFuncionarioComSucesso() throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
+    void deveAtualizarFuncionarioComSucesso()
+            throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
 
         final FuncionarioDTO funcionarioAtualizado = FuncionarioStub.getFuncionarioCompleta();
 
-        when(atualizarFuncionarioPortIn.atualizar(any(FuncionarioDTO.class))).thenReturn(funcionarioAtualizado);
+        when(atualizarFuncionarioPortIn.atualizar(any(FuncionarioDTO.class)))
+                .thenReturn(funcionarioAtualizado);
 
-        final ResponseEntity<?> resposta = funcionarioAdapter.atualizaFuncionario(funcionarioAtualizado);
+        final ResponseEntity<?> resposta =
+                funcionarioAdapter.atualizaFuncionario(funcionarioAtualizado);
 
         assertNotNull(resposta);
         assertEquals(HttpStatusCode.valueOf(200), resposta.getStatusCode());
@@ -127,14 +177,16 @@ public class FuncionarioAdapterTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioParaAtualizar() throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
+    void deveLancarExcecaoQuandoNaoEncontrarFuncionarioParaAtualizar()
+            throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
 
         final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
 
         when(atualizarFuncionarioPortIn.atualizar(any(FuncionarioDTO.class)))
                 .thenThrow(FuncionarioNaoEncontradoException.class);
 
-        final ResponseEntity<?> erro = funcionarioAdapter.atualizaFuncionario(funcionarioDTO);
+        final ResponseEntity<?> erro =
+                funcionarioAdapter.atualizaFuncionario(funcionarioDTO);
 
         assertNotNull(erro);
         assertEquals(HttpStatusCode.valueOf(404), erro.getStatusCode());
@@ -143,14 +195,16 @@ public class FuncionarioAdapterTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoIdFuncionarioForObrigatorioNaAtualizacao() throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
+    void deveLancarExcecaoQuandoIdFuncionarioForObrigatorioNaAtualizacao()
+            throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
 
         final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
 
         when(atualizarFuncionarioPortIn.atualizar(any(FuncionarioDTO.class)))
                 .thenThrow(IdFuncionarioObrigatorioException.class);
 
-        final ResponseEntity<?> erro = funcionarioAdapter.atualizaFuncionario(funcionarioDTO);
+        final ResponseEntity<?> erro =
+                funcionarioAdapter.atualizaFuncionario(funcionarioDTO);
 
         assertNotNull(erro);
         assertEquals(HttpStatusCode.valueOf(404), erro.getStatusCode());

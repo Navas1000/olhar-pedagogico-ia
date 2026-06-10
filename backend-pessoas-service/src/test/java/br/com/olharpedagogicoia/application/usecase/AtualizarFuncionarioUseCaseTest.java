@@ -6,6 +6,7 @@ import br.com.olharpedagogicoia.application.exceptions.IdFuncionarioObrigatorioE
 import br.com.olharpedagogicoia.application.port.out.AtualizarFuncionarioPortOut;
 import br.com.olharpedagogicoia.application.port.out.ConsultarFuncionarioPortOut;
 import br.com.olharpedagogicoia.application.stub.FuncionarioStub;
+import br.com.olharpedagogicoia.config.Salt;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -29,11 +30,16 @@ public class AtualizarFuncionarioUseCaseTest {
     @Spy
     private AtualizarFuncionarioPortOut atualizarFuncionarioPortOut;
 
+    @Mock
+    private Salt salt;
+
     @InjectMocks
     private AtualizarFuncionarioUseCase atualizarFuncionarioUseCase;
 
     @Test
     void deveAtualizarFuncionarioDto() throws FuncionarioNaoEncontradoException, IdFuncionarioObrigatorioException {
+
+        when(salt.getSalt()).thenReturn("abc123");
 
         final FuncionarioDTO funcionarioConsultado = FuncionarioStub.getFuncionarioCompleta();
         when(consultarFuncionarioPortOut.consultar(anyInt())).thenReturn(funcionarioConsultado);
@@ -63,16 +69,45 @@ public class AtualizarFuncionarioUseCaseTest {
                 funcionarioRecebidoNoAtualizar.getDataModificacao()
         );
 
+        assertNotNull(funcionarioRecebidoNoAtualizar.getSenha());
+        assertTrue(funcionarioRecebidoNoAtualizar.getSenha().length() <= 20);
+
         verify(consultarFuncionarioPortOut).consultar(anyInt());
         verify(atualizarFuncionarioPortOut).atualizar(any(FuncionarioDTO.class));
 
         assertNotNull(resultadoDaAtualizacao);
+        assertNull(resultadoDaAtualizacao.getSenha());
+    }
+
+    @Test
+    void deveLancarAExcecaoQuandoSenhaForNula() {
+
+        final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
+        funcionarioDTO.setSenha(null);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> atualizarFuncionarioUseCase.atualizar(funcionarioDTO)
+        );
+    }
+
+    @Test
+    void deveLancarAExcecaoQuandoSenhaForVazia() {
+
+        final FuncionarioDTO funcionarioDTO = FuncionarioStub.getFuncionarioCompleta();
+        funcionarioDTO.setSenha("");
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> atualizarFuncionarioUseCase.atualizar(funcionarioDTO)
+        );
     }
 
     @Test
     void deveLancarAExcecaoIdFuncionarioObrigatorioQuandoIdFuncionarioForNulo() {
 
-        final FuncionarioDTO funcionario = new FuncionarioDTO();
+        final FuncionarioDTO funcionario = FuncionarioStub.getFuncionarioCompleta();
+        funcionario.setIdFuncionario(null);
 
         assertThrows(
                 IdFuncionarioObrigatorioException.class,

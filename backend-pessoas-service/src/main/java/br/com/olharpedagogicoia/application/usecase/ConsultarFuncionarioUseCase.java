@@ -20,6 +20,8 @@ public class ConsultarFuncionarioUseCase implements ConsultarFuncionarioPortIn {
 
         final FuncionarioDTO funcionarioDTO = consultarFuncionarioPortOut.consultar(id);
 
+        funcionarioDTO.setSenha(null);
+
         log.info("Funcionário consultado com sucesso: {}", funcionarioDTO);
 
         return funcionarioDTO;
