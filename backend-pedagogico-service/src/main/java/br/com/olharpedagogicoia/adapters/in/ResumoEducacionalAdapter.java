@@ -2,7 +2,10 @@ package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.ResumoEducacionalDTO;
 import br.com.olharpedagogicoia.application.exceptions.ResumoEducacionalNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.CadastrarResumoEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarResumoEducacionalPortIn;
+import br.com.olharpedagogicoia.application.port.in.RemoverResumoEducacionalPortIn;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,8 @@ import java.util.Map;
 public class ResumoEducacionalAdapter {
 
     private final ConsultarResumoEducacionalPortIn consultarResumoEducacionalPortIn;
+    private final CadastrarResumoEducacionalPortIn cadastrarResumoEducacionalPortIn;
+    private final RemoverResumoEducacionalPortIn removerResumoEducacionalPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaResumoEducacional(@PathVariable final Integer id) {
@@ -40,5 +45,39 @@ public class ResumoEducacionalAdapter {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<ResumoEducacionalDTO> cadastraResumoEducacional(
+            @RequestBody @Valid final ResumoEducacionalDTO resumoEducacionalDTO
+    ) {
+
+        log.info("Cadastro de Resumo Educacional: {}", resumoEducacionalDTO);
+
+        final ResumoEducacionalDTO resumoEducacionalCadastrado =
+                cadastrarResumoEducacionalPortIn.cadastrar(resumoEducacionalDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resumoEducacionalCadastrado);
+    }
+
+    @DeleteMapping("/{idResumo}")
+    public ResponseEntity<?> removerResumoEducacional(@PathVariable final Integer idResumo) {
+
+        log.info("Remover Resumo Educacional: {}", idResumo);
+
+        try {
+            removerResumoEducacionalPortIn.remover(idResumo);
+
+        } catch (ResumoEducacionalNaoEncontradoException excecao) {
+
+            log.error("Erro ao remover Resumo Educacional: {}, mensagem: {}", idResumo, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
