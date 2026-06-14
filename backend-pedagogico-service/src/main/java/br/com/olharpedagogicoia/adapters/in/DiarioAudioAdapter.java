@@ -2,6 +2,8 @@ package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.DiarioAudioDTO;
 import br.com.olharpedagogicoia.application.exceptions.DiarioAudioNaoEncontradoException;
+import br.com.olharpedagogicoia.application.exceptions.IdDiarioAudioObrigatorioException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarDiarioAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarDiarioAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarDiarioAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverDiarioAudioPortIn;
@@ -24,6 +26,7 @@ public class DiarioAudioAdapter {
     private final ConsultarDiarioAudioPortIn consultarDiarioAudioPortIn;
     private final CadastrarDiarioAudioPortIn cadastrarDiarioAudioPortIn;
     private final RemoverDiarioAudioPortIn removerDiarioAudioPortIn;
+    private final AtualizarDiarioAudioPortIn atualizarDiarioAudioPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaDiarioAudio(@PathVariable final Integer id) {
@@ -31,7 +34,8 @@ public class DiarioAudioAdapter {
         log.info("Consulta de Diário Áudio: {}", id);
 
         try {
-            final DiarioAudioDTO diarioAudioConsultado = consultarDiarioAudioPortIn.consultar(id);
+            final DiarioAudioDTO diarioAudioConsultado =
+                    consultarDiarioAudioPortIn.consultar(id);
 
             return ResponseEntity.ok(diarioAudioConsultado);
 
@@ -48,7 +52,7 @@ public class DiarioAudioAdapter {
 
     @PostMapping
     public ResponseEntity<DiarioAudioDTO> cadastraDiarioAudio(
-            @RequestBody @Valid DiarioAudioDTO diarioAudioDTO
+            @RequestBody @Valid final DiarioAudioDTO diarioAudioDTO
     ) {
 
         log.info("Cadastro de Diário Áudio: {}", diarioAudioDTO);
@@ -78,5 +82,30 @@ public class DiarioAudioAdapter {
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaDiarioAudio(
+            @RequestBody @Valid final DiarioAudioDTO diarioAudioDTO
+    ) {
+
+        log.info("Atualizar Diário Áudio: {}", diarioAudioDTO);
+
+        try {
+            final DiarioAudioDTO diarioAudioAtualizado =
+                    atualizarDiarioAudioPortIn.atualizar(diarioAudioDTO);
+
+            return ResponseEntity.ok(diarioAudioAtualizado);
+
+        } catch (DiarioAudioNaoEncontradoException | IdDiarioAudioObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Diário Áudio: {}, mensagem: {}",
+                    diarioAudioDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

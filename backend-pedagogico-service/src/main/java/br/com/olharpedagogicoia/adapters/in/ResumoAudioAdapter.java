@@ -1,7 +1,9 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.ResumoAudioDTO;
+import br.com.olharpedagogicoia.application.exceptions.IdResumoAudioObrigatorioException;
 import br.com.olharpedagogicoia.application.exceptions.ResumoAudioNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarResumoAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarResumoAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarResumoAudioPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverResumoAudioPortIn;
@@ -24,6 +26,7 @@ public class ResumoAudioAdapter {
     private final ConsultarResumoAudioPortIn consultarResumoAudioPortIn;
     private final CadastrarResumoAudioPortIn cadastrarResumoAudioPortIn;
     private final RemoverResumoAudioPortIn removerResumoAudioPortIn;
+    private final AtualizarResumoAudioPortIn atualizarResumoAudioPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaResumoAudio(@PathVariable final Integer id) {
@@ -79,5 +82,30 @@ public class ResumoAudioAdapter {
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaResumoAudio(
+            @RequestBody @Valid final ResumoAudioDTO resumoAudioDTO
+    ) {
+
+        log.info("Atualizar Resumo Áudio: {}", resumoAudioDTO);
+
+        try {
+            final ResumoAudioDTO resumoAudioAtualizado =
+                    atualizarResumoAudioPortIn.atualizar(resumoAudioDTO);
+
+            return ResponseEntity.ok(resumoAudioAtualizado);
+
+        } catch (ResumoAudioNaoEncontradoException | IdResumoAudioObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Resumo Áudio: {}, mensagem: {}",
+                    resumoAudioDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

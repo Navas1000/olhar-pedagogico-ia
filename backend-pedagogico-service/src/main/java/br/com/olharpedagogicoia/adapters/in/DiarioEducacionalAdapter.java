@@ -2,6 +2,8 @@ package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.DiarioEducacionalDTO;
 import br.com.olharpedagogicoia.application.exceptions.DiarioEducacionalNaoEncontradoException;
+import br.com.olharpedagogicoia.application.exceptions.IdDiarioEducacionalObrigatorioException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarDiarioEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarDiarioEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarDiarioEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverDiarioEducacionalPortIn;
@@ -24,6 +26,7 @@ public class DiarioEducacionalAdapter {
     private final ConsultarDiarioEducacionalPortIn consultarDiarioEducacionalPortIn;
     private final CadastrarDiarioEducacionalPortIn cadastrarDiarioEducacionalPortIn;
     private final RemoverDiarioEducacionalPortIn removerDiarioEducacionalPortIn;
+    private final AtualizarDiarioEducacionalPortIn atualizarDiarioEducacionalPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaDiarioEducacional(@PathVariable final Integer id) {
@@ -79,5 +82,30 @@ public class DiarioEducacionalAdapter {
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaDiarioEducacional(
+            @RequestBody @Valid final DiarioEducacionalDTO diarioEducacionalDTO
+    ) {
+
+        log.info("Atualizar Diário Educacional: {}", diarioEducacionalDTO);
+
+        try {
+            final DiarioEducacionalDTO diarioEducacionalAtualizado =
+                    atualizarDiarioEducacionalPortIn.atualizar(diarioEducacionalDTO);
+
+            return ResponseEntity.ok(diarioEducacionalAtualizado);
+
+        } catch (DiarioEducacionalNaoEncontradoException | IdDiarioEducacionalObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Diário Educacional: {}, mensagem: {}",
+                    diarioEducacionalDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

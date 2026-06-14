@@ -1,0 +1,11 @@
+{
+  "id_resumo": 1,
+  "id_aluno": 1,
+  "id_turma": 1,
+  "id_aula": 1,
+  "tipo_resumo": "SEMANA",
+  "data_inicio": "2026-06-10T08:00:00",
+  "data_fim": "2026-06-17T09:00:00",
+  "resumo_texto": "Resumo educacional alterado.",
+  "data_criacao": "2026-06-10T13:36:13"
+}

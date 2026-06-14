@@ -1,7 +1,9 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.ResumoEducacionalDTO;
+import br.com.olharpedagogicoia.application.exceptions.IdResumoEducacionalObrigatorioException;
 import br.com.olharpedagogicoia.application.exceptions.ResumoEducacionalNaoEncontradoException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarResumoEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarResumoEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarResumoEducacionalPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverResumoEducacionalPortIn;
@@ -24,6 +26,7 @@ public class ResumoEducacionalAdapter {
     private final ConsultarResumoEducacionalPortIn consultarResumoEducacionalPortIn;
     private final CadastrarResumoEducacionalPortIn cadastrarResumoEducacionalPortIn;
     private final RemoverResumoEducacionalPortIn removerResumoEducacionalPortIn;
+    private final AtualizarResumoEducacionalPortIn atualizarResumoEducacionalPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaResumoEducacional(@PathVariable final Integer id) {
@@ -79,5 +82,30 @@ public class ResumoEducacionalAdapter {
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaResumoEducacional(
+            @RequestBody @Valid final ResumoEducacionalDTO resumoEducacionalDTO
+    ) {
+
+        log.info("Atualizar Resumo Educacional: {}", resumoEducacionalDTO);
+
+        try {
+            final ResumoEducacionalDTO resumoEducacionalAtualizado =
+                    atualizarResumoEducacionalPortIn.atualizar(resumoEducacionalDTO);
+
+            return ResponseEntity.ok(resumoEducacionalAtualizado);
+
+        } catch (ResumoEducacionalNaoEncontradoException | IdResumoEducacionalObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Resumo Educacional: {}, mensagem: {}",
+                    resumoEducacionalDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

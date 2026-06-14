@@ -1,0 +1,10 @@
+{
+  "id_audio": 1,
+  "id_resumo": 1,
+  "nome_bucket": "bucket-resumo-alterado",
+  "chave_objeto": "resumos/resumo-1/audio-alterado.mp3",
+  "duracao_segundos": 450,
+  "formato": "mp3",
+  "tamanho_bytes": 2048000,
+  "data_criacao": "2026-06-10T13:36:13"
+}

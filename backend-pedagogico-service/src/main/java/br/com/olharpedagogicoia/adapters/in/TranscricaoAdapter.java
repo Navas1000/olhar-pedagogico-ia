@@ -1,7 +1,9 @@
 package br.com.olharpedagogicoia.adapters.in;
 
 import br.com.olharpedagogicoia.application.dto.TranscricaoDTO;
+import br.com.olharpedagogicoia.application.exceptions.IdTranscricaoObrigatorioException;
 import br.com.olharpedagogicoia.application.exceptions.TranscricaoNaoEncontradaException;
+import br.com.olharpedagogicoia.application.port.in.AtualizarTranscricaoPortIn;
 import br.com.olharpedagogicoia.application.port.in.CadastrarTranscricaoPortIn;
 import br.com.olharpedagogicoia.application.port.in.ConsultarTranscricaoPortIn;
 import br.com.olharpedagogicoia.application.port.in.RemoverTranscricaoPortIn;
@@ -24,6 +26,7 @@ public class TranscricaoAdapter {
     private final ConsultarTranscricaoPortIn consultarTranscricaoPortIn;
     private final CadastrarTranscricaoPortIn cadastrarTranscricaoPortIn;
     private final RemoverTranscricaoPortIn removerTranscricaoPortIn;
+    private final AtualizarTranscricaoPortIn atualizarTranscricaoPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaTranscricao(@PathVariable final Integer id) {
@@ -79,5 +82,30 @@ public class TranscricaoAdapter {
         }
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> atualizaTranscricao(
+            @RequestBody @Valid final TranscricaoDTO transcricaoDTO
+    ) {
+
+        log.info("Atualizar Transcrição: {}", transcricaoDTO);
+
+        try {
+            final TranscricaoDTO transcricaoAtualizada =
+                    atualizarTranscricaoPortIn.atualizar(transcricaoDTO);
+
+            return ResponseEntity.ok(transcricaoAtualizada);
+
+        } catch (TranscricaoNaoEncontradaException | IdTranscricaoObrigatorioException excecao) {
+
+            log.error("Erro ao atualizar Transcrição: {}, mensagem: {}",
+                    transcricaoDTO, excecao.getMessage());
+
+            final Map<String, String> erro = new HashMap<>();
+            erro.put("mensagem", excecao.getMessage());
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+        }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "id_audio": 1,
+  "id_diario": 1,
+  "nome_bucket": "bucket-diario-alterado",
+  "chave_objeto": "audios/aula-1/audio-alterado.mp3",
+  "tamanho_arquivo": 3072000,
+  "extensao": "mp3",
+  "duracao_segundos": 4200,
+  "checksum": "xyz789def456",
+  "data_criacao": "2026-06-10T13:36:13"
+}

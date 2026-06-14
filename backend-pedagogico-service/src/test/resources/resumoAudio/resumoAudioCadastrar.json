@@ -1,0 +1,8 @@
+{
+  "id_resumo": 1,
+  "nome_bucket": "bucket-resumo",
+  "chave_objeto": "resumos/resumo-1/audio.mp3",
+  "duracao_segundos": 300,
+  "formato": "mp3",
+  "tamanho_bytes": 1024000
+}
