@@ -37,6 +37,8 @@ services:
         condition: service_healthy
     ports:
       - "8001:8001"
+    env_file:
+      - env-backend-pessoas-service
     healthcheck:
       test: ["CMD", "wget", "-q", "http://backend-pessoas-service:8001/actuator/health"]
       interval: 10s
