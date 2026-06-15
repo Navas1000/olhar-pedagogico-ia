@@ -14,7 +14,7 @@ spring:
         default-context: backend-pessoas-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/olhar-pedagogico-db
+    url: jdbc:mysql://mysql:3306/olhar-pedagogico-db
     username: mateus
     password: ${db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
