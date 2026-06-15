@@ -6,8 +6,8 @@ spring:
       uri: http://127.0.0.1:8200
       authentication: APPROLE
       app-role:
-        role-id: 9063fa80-41d0-0f6e-e92f-8252f2e8d250
-        secret-id: a88f4569-ef24-f702-e86a-55403db9c74d
+        role-id: ${BACKEND_PESSOAS_SERVICE_ROLE_ID}
+        secret-id: ${BACKEND_PESSOAS_SERVICE_SECRET_ID}
       kv:
         enabled: true
         backend: secret
@@ -28,5 +28,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
 
+senha.salt: ${BACKEND_PESSOAS_SERVICE_SALT}
+
 server:
   port: 8001
+
+
