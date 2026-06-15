@@ -9,6 +9,8 @@ services:
     container_name: backend-institucional-service
     restart: unless-stopped
     depends_on:
+      vault:
+        condition: service_healthy
       mysql:
         condition: service_healthy
     ports:
@@ -29,6 +31,8 @@ services:
     container_name: backend-pessoas-service
     restart: unless-stopped
     depends_on:
+      vault:
+        condition: service_healthy
       mysql:
         condition: service_healthy
     ports:
