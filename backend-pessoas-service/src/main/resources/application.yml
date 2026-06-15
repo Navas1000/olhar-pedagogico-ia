@@ -3,7 +3,7 @@ spring:
     import: "vault://" # Ativa a integração
   cloud:
     vault:
-      uri: http://localhost:8200
+      uri: http://vault:8200
       authentication: APPROLE
       app-role:
         role-id: ${BACKEND_PESSOAS_SERVICE_ROLE_ID}
