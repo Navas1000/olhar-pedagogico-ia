@@ -64,7 +64,7 @@ services:
       - IPC_LOCK
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://127.0.0.1:8200/"]
+      test: ["CMD", "vault", "status"]
       interval: 10s
       timeout: 5s
       retries: 5
