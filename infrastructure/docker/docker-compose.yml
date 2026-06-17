@@ -15,8 +15,10 @@ services:
         condition: service_healthy
     ports:
       - "8000:8000"
+    env_file:
+      - env-backend-institucional-service
     healthcheck:
-      test: ["CMD", "wget", "-q", "http://backend-institucional-service:8000/actuator/health"]
+      test: [ "CMD", "wget", "-q", "http://backend-institucional-service:8000/actuator/health" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -41,6 +43,54 @@ services:
       - env-backend-pessoas-service
     healthcheck:
       test: ["CMD", "wget", "-q", "http://backend-pessoas-service:8001/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  backend-academico-service:
+    build:
+      context: ../../backend-academico-service
+      dockerfile: Dockerfile
+    profiles:
+      - aplicacao
+    container_name: backend-academico-service
+    restart: unless-stopped
+    depends_on:
+      vault:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8002:8002"
+    env_file:
+      - env-backend-academico-service
+    healthcheck:
+      test: ["CMD", "wget", "-q", "http://backend-academico-service:8002/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  backend-pedagogico-service:
+    build:
+      context: ../../backend-pedagogico-service
+      dockerfile: Dockerfile
+    profiles:
+      - aplicacao
+    container_name: backend-pedagogico-service
+    restart: unless-stopped
+    depends_on:
+      vault:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8003:8003"
+    env_file:
+      - env-backend-pedagogico-service
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "http://backend-pedagogico-service:8003/actuator/health" ]
       interval: 10s
       timeout: 5s
       retries: 5
