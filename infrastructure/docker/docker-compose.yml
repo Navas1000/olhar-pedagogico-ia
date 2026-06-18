@@ -46,6 +46,54 @@ services:
       retries: 5
       start_period: 40s
 
+  backend-academico-service:
+    build:
+      context: ../../backend-academico-service
+      dockerfile: Dockerfile
+    profiles:
+      - aplicacao
+    container_name: backend-academico-service
+    restart: unless-stopped
+    depends_on:
+      vault:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8002:8002"
+    env_file:
+      - env-backend-academico-service
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "http://backend-academico-service:8002/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  backend-pedagogico-service:
+    build:
+      context: ../../backend-pedagogico-service
+      dockerfile: Dockerfile
+    profiles:
+      - aplicacao
+    container_name: backend-pedagogico-service
+    restart: unless-stopped
+    depends_on:
+      vault:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8003:8003"
+    env_file:
+      - env-backend-pedagogico-service
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "http://backend-pedagogico-service:8003/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
   vault:
     image: hashicorp/vault:1.21
     container_name: vault
