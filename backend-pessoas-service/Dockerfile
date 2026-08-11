@@ -23,4 +23,4 @@ COPY --from=build /app/target/backend-pessoas-service-1.0-SNAPSHOT.jar app.jar
 EXPOSE 8001
 
 # Comando para iniciar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar", "-Dspring.profiles.active=docker"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]
