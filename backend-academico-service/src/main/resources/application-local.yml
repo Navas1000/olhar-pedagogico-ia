@@ -3,18 +3,18 @@ spring:
     import: "vault://" # Ativa a integração
   cloud:
     vault:
-      uri: http://vault:8200
+      uri: http://127.0.0.1:8200
       authentication: APPROLE
       app-role:
-        role-id: ${BACKEND_INSTITUCIONAL_SERVICE_ROLE_ID}
-        secret-id: ${BACKEND_INSTITUCIONAL_SERVICE_SECRET_ID}
+        role-id: ${BACKEND_ACADEMICO_SERVICE_ROLE_ID}
+        secret-id: ${BACKEND_ACADEMICO_SERVICE_SECRET_ID}
       kv:
         enabled: true
         backend: secret
-        default-context: backend-institucional-service
+        default-context: backend-academico-service
 
   datasource:
-    url: jdbc:mysql://mysql:3306/olhar-pedagogico-db
+    url: jdbc:mysql://127.0.0.1:3306/olhar-pedagogico-db
     username: mateus
     password: ${db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -29,4 +29,4 @@ spring:
         format_sql: true
 
 server:
-  port: 8000
+  port: 8002

@@ -23,4 +23,4 @@ COPY --from=build /app/target/backend-pedagogico-service-1.0-SNAPSHOT.jar app.ja
 EXPOSE 8003
 
 # Comando para iniciar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "-Dspring.profiles.active=docker"]

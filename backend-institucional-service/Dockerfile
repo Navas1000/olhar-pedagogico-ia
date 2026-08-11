@@ -23,4 +23,4 @@ COPY --from=build /app/target/backend-institucional-service-1.0-SNAPSHOT.jar app
 EXPOSE 8000
 
 # Comando para iniciar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar", "-Dspring.profiles.active=docker"]

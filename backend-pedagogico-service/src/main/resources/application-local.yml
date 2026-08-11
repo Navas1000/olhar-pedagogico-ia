@@ -1,0 +1,32 @@
+spring:
+  config:
+    import: "vault://" # Ativa a integração
+  cloud:
+    vault:
+      uri: http://127.0.0.1:8200
+      authentication: APPROLE
+      app-role:
+        role-id: ${BACKEND_PEDAGOGICO_SERVICE_ROLE_ID}
+        secret-id: ${BACKEND_PEDAGOGICO_SERVICE_SECRET_ID}
+      kv:
+        enabled: true
+        backend: secret
+        default-context: backend-pedagogico-service
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/olhar-pedagogico-db
+    username: mateus
+    password: ${db.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+server:
+  port: 8003
