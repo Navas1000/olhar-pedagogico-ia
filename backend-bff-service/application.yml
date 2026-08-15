@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: bff
+
+server:
+  port: 9000
+
+backend:
+  pessoas:
+    url: http://localhost:8001
