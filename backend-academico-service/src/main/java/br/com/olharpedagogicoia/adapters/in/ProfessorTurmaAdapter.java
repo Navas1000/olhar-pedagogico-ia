@@ -3,10 +3,7 @@ package br.com.olharpedagogicoia.adapters.in;
 import br.com.olharpedagogicoia.application.dto.ProfessorTurmaDTO;
 import br.com.olharpedagogicoia.application.exceptions.IdProfessorTurmaObrigatorioException;
 import br.com.olharpedagogicoia.application.exceptions.ProfessorTurmaNaoEncontradaException;
-import br.com.olharpedagogicoia.application.port.in.AtualizarProfessorTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.CadastrarProfessorTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.ConsultarProfessorTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.RemoverProfessorTurmaPortIn;
+import br.com.olharpedagogicoia.application.port.in.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +25,7 @@ public class ProfessorTurmaAdapter {
     private final ConsultarProfessorTurmaPortIn consultarProfessorTurmaPortIn;
     private final RemoverProfessorTurmaPortIn removerProfessorTurmaPortIn;
     private final AtualizarProfessorTurmaPortIn atualizarProfessorTurmaPortIn;
+    private final ConsultarProfessorTurmaPorFuncionarioPortIn consultarProfessorTurmaPorFuncionarioPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaProfessorTurma(@PathVariable final Integer id) {
@@ -47,6 +46,18 @@ public class ProfessorTurmaAdapter {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
         }
     }
+
+    @GetMapping("/funcionario/{idFuncionario}")
+    public ResponseEntity<List<ProfessorTurmaDTO>> consultarPorFuncionario(
+            @PathVariable final Integer idFuncionario) {
+
+        final List<ProfessorTurmaDTO> alocacoes =
+                consultarProfessorTurmaPorFuncionarioPortIn
+                        .consultarPorFuncionario(idFuncionario);
+
+        return ResponseEntity.ok(alocacoes);
+    }
+
 
     @PostMapping
     public ResponseEntity<ProfessorTurmaDTO> cadastraProfessorTurma(@RequestBody @Valid ProfessorTurmaDTO professorTurmaDTO) {
