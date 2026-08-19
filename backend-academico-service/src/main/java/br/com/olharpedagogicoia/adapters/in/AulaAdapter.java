@@ -3,10 +3,7 @@ package br.com.olharpedagogicoia.adapters.in;
 import br.com.olharpedagogicoia.application.dto.AulaDTO;
 import br.com.olharpedagogicoia.application.exceptions.AulaNaoEncontradaException;
 import br.com.olharpedagogicoia.application.exceptions.IdAulaObrigatorioException;
-import br.com.olharpedagogicoia.application.port.in.AtualizarAulaPortIn;
-import br.com.olharpedagogicoia.application.port.in.CadastrarAulaPortIn;
-import br.com.olharpedagogicoia.application.port.in.ConsultarAulaPortIn;
-import br.com.olharpedagogicoia.application.port.in.RemoverAulaPortIn;
+import br.com.olharpedagogicoia.application.port.in.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +25,7 @@ public class AulaAdapter {
     private final ConsultarAulaPortIn consultarAulaPortIn;
     private final RemoverAulaPortIn removerAulaPortIn;
     private final AtualizarAulaPortIn atualizarAulaPortIn;
+    private final ConsultarAulaPorAlocacaoPortIn consultarAulaPorAlocacaoPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaAula(@PathVariable final Integer id) {
@@ -46,6 +45,22 @@ public class AulaAdapter {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
         }
+    }
+
+    @GetMapping("/alocacao/{idAlocacao}")
+    public ResponseEntity<List<AulaDTO>> consultarPorAlocacao(
+            @PathVariable final Integer idAlocacao) {
+
+        log.info(
+                "Consulta de aulas por alocação: {}",
+                idAlocacao
+        );
+
+        final List<AulaDTO> aulas =
+                consultarAulaPorAlocacaoPortIn
+                        .consultarPorAlocacao(idAlocacao);
+
+        return ResponseEntity.ok(aulas);
     }
 
     @PostMapping

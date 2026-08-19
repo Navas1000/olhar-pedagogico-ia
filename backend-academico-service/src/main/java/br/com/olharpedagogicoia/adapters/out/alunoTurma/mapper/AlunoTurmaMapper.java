@@ -7,7 +7,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AlunoTurmaMapper {
 
-    AlunoTurmaDTO deAlunoTurmaEntityParaAlunoTurmaDTO(final AlunoTurmaEntity alunoTurmaEntity);
+    AlunoTurmaDTO deAlunoTurmaEntityParaAlunoTurmaDTO(
+            final AlunoTurmaEntity alunoTurmaEntity
+    );
 
-    AlunoTurmaEntity deAlunoTurmaDTOParaAlunoTurmaEntity(final AlunoTurmaDTO alunoTurmaDTO);
+    AlunoTurmaEntity deAlunoTurmaDTOParaAlunoTurmaEntity(
+            final AlunoTurmaDTO alunoTurmaDTO
+    );
 }

@@ -7,7 +7,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AulaMapper {
 
-    AulaDTO deAulaEntityParaAulaDTO(final AulaEntity aulaEntity);
+    AulaDTO deAulaEntityParaAulaDTO(
+            final AulaEntity aulaEntity
+    );
 
-    AulaEntity deAulaDTOParaAulaEntity(final AulaDTO aulaDTO);
+    AulaEntity deAulaDTOParaAulaEntity(
+            final AulaDTO aulaDTO
+    );
 }

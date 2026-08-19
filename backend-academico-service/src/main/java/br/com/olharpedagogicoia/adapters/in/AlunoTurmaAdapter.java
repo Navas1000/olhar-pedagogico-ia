@@ -3,10 +3,7 @@ package br.com.olharpedagogicoia.adapters.in;
 import br.com.olharpedagogicoia.application.dto.AlunoTurmaDTO;
 import br.com.olharpedagogicoia.application.exceptions.AlunoTurmaNaoEncontradaException;
 import br.com.olharpedagogicoia.application.exceptions.IdAlunoTurmaObrigatorioException;
-import br.com.olharpedagogicoia.application.port.in.AtualizarAlunoTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.CadastrarAlunoTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.ConsultarAlunoTurmaPortIn;
-import br.com.olharpedagogicoia.application.port.in.RemoverAlunoTurmaPortIn;
+import br.com.olharpedagogicoia.application.port.in.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +25,7 @@ public class AlunoTurmaAdapter {
     private final ConsultarAlunoTurmaPortIn consultarAlunoTurmaPortIn;
     private final RemoverAlunoTurmaPortIn removerAlunoTurmaPortIn;
     private final AtualizarAlunoTurmaPortIn atualizarAlunoTurmaPortIn;
+    private final ConsultarAlunoTurmaPorTurmaPortIn consultarAlunoTurmaPorTurmaPortIn;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> consultaAlunoTurma(@PathVariable final Integer id) {
@@ -46,6 +45,22 @@ public class AlunoTurmaAdapter {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
         }
+    }
+
+    @GetMapping("/turma/{idTurma}")
+    public ResponseEntity<List<AlunoTurmaDTO>> consultarPorTurma(
+            @PathVariable final Integer idTurma) {
+
+        log.info(
+                "Consulta de alunos da turma: {}",
+                idTurma
+        );
+
+        final List<AlunoTurmaDTO> alunos =
+                consultarAlunoTurmaPorTurmaPortIn
+                        .consultarPorTurma(idTurma);
+
+        return ResponseEntity.ok(alunos);
     }
 
     @PostMapping
